@@ -12,6 +12,7 @@ def testUpMotor():
         wait(3000)
         
 def grap():
+    print("grap")
     up_motor.run_until_stalled(-1000,then=Stop.HOLD)
     down_motor.run_until_stalled(-1000,then=Stop.HOLD)
     down_motor.run_until_stalled(1000,then=Stop.HOLD)
