@@ -12,7 +12,7 @@ preflightChecks()
 reset()
 downClaw(70)
 take8Blocks()
-
+print("done")
 # tmpTest()
 base.stop_and_hold()
 finish()
