@@ -1,32 +1,32 @@
-class Sync:
+class SyncCtrl:
     print("Sync")
 
-    def __init__(self):
-        print("__init__")
+    @classmethod
+    def config(cls, kp: float, kd: float, speedB: float, speedC: float):
+        cls.kp = kp
+        cls.kd = kd
+        cls.speedB = speedB
+        cls.speedC = speedC
+        cls.speedBsign = abs(speedB + 1) - abs(speedB)
+        cls.speedCsign = abs(speedC + 1) - abs(speedC)
+        cls.last_error = 0
 
-    def config(self, kp: float, kd: float, speedB: float, speedC: float):
-        self.kp = kp
-        self.kd = kd
-        self.speedB = speedB
-        self.speedC = speedC
-        self.speedBsign = abs(speedB + 1) - abs(speedB)
-        self.speedCsign = abs(speedC + 1) - abs(speedC)
-        self.last_error = 0
-
-    def calculate(self, encoderB, encoderC):
-        error = ((self.speedC * encoderB) - (self.speedB * encoderC))
-        U = (error - self.last_error) * self.kd + error * self.kp
-        powerB = self.speedB - self.speedCsign * U
-        powerC = self.speedC + self.speedBsign * U
-        self.last_error = error
+    @classmethod
+    def calculate(cls, encoderB, encoderC):
+        error = ((cls.speedC * encoderB) - (cls.speedB * encoderC))
+        U = (error - cls.last_error) * cls.kd + error * cls.kp
+        powerB = cls.speedB - cls.speedCsign * U
+        powerC = cls.speedC + cls.speedBsign * U
+        cls.last_error = error
         return (powerB, powerC)
 
-    def calculateWithSpeed(self, encoderB, encoderC, speedB, speedC):
+    @classmethod
+    def calculateWithSpeed(cls, encoderB, encoderC, speedB, speedC):
         speedBsign = abs(speedB + 1) - abs(speedB)
         speedCsign = abs(speedC + 1) - abs(speedC)
         error = ((speedC * encoderB) - (speedB * encoderC))
-        U = (error - self.last_error) * self.kd + error * self.kp
+        U = (error - cls.last_error) * cls.kd + error * cls.kp
         powerB = speedB - speedCsign * U
         powerC = speedC + speedBsign * U
-        self.last_error = error
+        cls.last_error = error
         return (powerB, powerC)

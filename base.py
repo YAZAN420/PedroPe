@@ -1,31 +1,29 @@
 from pybricks.hubs import EV3Brick  # type: ignore
-from pybricks.ev3devices import Motor,ColorSensor,GyroSensor # type: ignore
-from pybricks.parameters import Port,Direction,Color,Stop # type: ignore
-from pybricks.tools import wait,StopWatch # type: ignore
+from pybricks.ev3devices import Motor, ColorSensor, GyroSensor  # type: ignore
+from pybricks.parameters import Port, Direction, Color, Stop  # type: ignore
+from pybricks.tools import wait, StopWatch  # type: ignore
 from pybricks.robotics import DriveBase  # type: ignore
 import math
+from syncCtrl import *
+from AccTwoEnc import *
+
+
 class Base(DriveBase):
     """
     This is the class responsible for movement. To use this class, you need to specify the left and right motors,
     the wheel circumference in cm.
     """
-    
+
     def __init__(self, left_motor: Motor,
-                right_motor: Motor,
-                wheel_diameter: float,
-                axle_track: float
+                 right_motor: Motor,
+                 wheel_diameter: float,
+                 axle_track: float
                  ):
         self.wheel_circumference = math.pi * wheel_diameter * 0.1
         self.left_motor = left_motor
         self.right_motor = right_motor
-        super().__init__(left_motor,right_motor,wheel_diameter,axle_track)
-    # def turn(self):
-    #     self.left_motor.run(300)
-    #     self.right_motor.run(-300)
-    #     wait(200)
-    #     self.left_motor.hold()
-    #     self.right_motor.hold()
-    
+        super().__init__(left_motor, right_motor, wheel_diameter, axle_track)
+
     def start_tank(self, leftSpeed: int, rightSpeed: int):
         """
         This method gives you control of the speed of each motor separately. The base will start moving and will not
@@ -48,7 +46,7 @@ class Base(DriveBase):
         """
         super().stop()
         self.left_motor.dc(leftSpeed)
-        self.right_motor.dc( rightSpeed)
+        self.right_motor.dc(rightSpeed)
         return
 
     def stop_and_hold(self):
@@ -93,11 +91,39 @@ class Base(DriveBase):
 
         self.start_tank(speed, speed)
         captured_angles = self.capture_motor_angles()
-        distance_in_degrees = abs(int((distance_in_cm / self.wheel_circumference) * 360))
+        distance_in_degrees = abs(
+            int((distance_in_cm / self.wheel_circumference) * 360))
         while self.get_avg_motor_deg(captured_angles) < distance_in_degrees:
             pass
         self.stop_and_hold()
         return
+
+    def syncMoveCm(self, distance_in_cm: float, speed: int):
+        SyncCtrl.config(0.012, 0, speed, speed)
+        distance_in_degrees = abs(
+            int((distance_in_cm / self.wheel_circumference) * 360))
+        done = False
+        while not done:
+            el = self.left_motor.angle()
+            er = self.right_motor.angle()
+            powerB, powerC = SyncCtrl.calculate(el, er)
+            self.left_motor.run(powerB)
+            self.right_motor.run(powerC)
+            done = (abs(el)+abs(er))/2 >= distance_in_degrees
+        self.stop_and_hold()
+
+    def syncAccTest(self, degrees, speedMin=200, speedMax=1000):
+        AccTwoEnc.config(speedMin, speedMax, 250, 250, degrees)
+        SyncCtrl.config(0.012, 0, 400, 400)
+        done = False
+        while not done:
+            el = self.left_motor.angle()
+            er = self.right_motor.angle()
+            power, done = AccTwoEnc.calculate(el, er)
+            powerB, powerC = SyncCtrl.calculateWithSpeed(el, er, power, power)
+            self.left_motor.run(powerB)
+            self.right_motor.run(powerC)
+        self.stop_and_hold()
 
     def start_moving(self, speed: int):
         """
