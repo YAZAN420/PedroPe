@@ -63,6 +63,7 @@ class Base(DriveBase):
         Resets the angles of the motors
         :return: nothing
         """
+        self.stop()
         self.left_motor.reset_angle(0)
         self.right_motor.reset_angle(0)
         return
@@ -88,7 +89,6 @@ class Base(DriveBase):
         :param distance_in_cm: Positive Integer
         :param speed: -100 to 100
         """
-
         self.start_tank(speed, speed)
         captured_angles = self.capture_motor_angles()
         distance_in_degrees = abs(
@@ -99,6 +99,7 @@ class Base(DriveBase):
         return
 
     def syncMoveCm(self, distance_in_cm: float, speed: int):
+        self.reset_angles()
         SyncCtrl.config(0.012, 0, speed, speed)
         distance_in_degrees = abs(
             int((distance_in_cm / self.wheel_circumference) * 360))
@@ -112,7 +113,12 @@ class Base(DriveBase):
             done = (abs(el)+abs(er))/2 >= distance_in_degrees
         self.stop_and_hold()
 
-    def syncAccTest(self, degrees, speedMin=200, speedMax=1000):
+    def syncAcc(self, degrees, speedMin=200, speedMax=1000):
+        self.reset_angles()
+        if (degrees < 0):
+            speedMin = -speedMin
+            speedMax = -speedMax
+            degrees = -degrees
         AccTwoEnc.config(speedMin, speedMax, 250, 250, degrees)
         SyncCtrl.config(0.012, 0, 400, 400)
         done = False

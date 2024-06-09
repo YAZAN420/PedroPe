@@ -108,19 +108,21 @@ def testU():
 def printValues():
     while True:
         wait(200)
+        r, g, b = front_sensor.rgb()
         h, s, v = front_sensor.hsv()
         wait(200)
-        # ref = front_sensor.reflection()
-        # wait(200)
-        # amp = front_sensor.ambient()
-        # print(r)
-        # print(g)
-        # print(b)
-        # print(h)
-        # print(s)
+        ref = front_sensor.reflection()
+        wait(200)
+        amp = front_sensor.ambient()
+        print(r)
+        print(g)
+        print(b)
+        print(h)
+        print(s)
         print(v)
-        # print(ref)
-        # print(amp)\
+        print(ref)
+        print(amp)
+        print("______________________________")
 
 
 def testBlocks():

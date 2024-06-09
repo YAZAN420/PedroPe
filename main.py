@@ -8,12 +8,12 @@ from Utils import *
 from config import *
 from tests import *
 from mainFunctions import *
-preflightChecks()
+# preflightChecks()
 reset()
-# base.syncMoveCm(10, 200)
-base.syncAccTest(1000)
-# take8Blocks()
-print("done")
+# downClaw()
+# resetDetectedColor()
+# printValues()
+take8Blocks()
 # tmpTest()
 base.stop_and_hold()
 finish()

@@ -13,7 +13,6 @@ class AccTwoEnc:
     @classmethod
     def calculate(cls, encoder_b, encoder_c):
         current_encoder = (abs(encoder_b) + abs(encoder_c)) / 2
-
         if current_encoder >= cls.total_distance:
             done = 1
             power_output = 0
@@ -31,15 +30,12 @@ class AccTwoEnc:
                 cls.power = ((cls.max_power - cls.min_power) / (cls.accel_distance ** 2) *
                              current_encoder ** 2 + cls.min_power)
             done = 0
-
         if cls.power < cls.min_power:
             cls.power = cls.min_power
         elif cls.power > cls.max_power:
             cls.power = cls.max_power
-
         if cls.is_negative == 1:
             power_output = -cls.power
         else:
             power_output = cls.power
-
         return power_output, done
