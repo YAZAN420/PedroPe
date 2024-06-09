@@ -130,3 +130,27 @@ def tmpTest():
         wait(2000)
         up_motor.stop()
         down_motor.stop()
+        
+        
+def syncTest():
+    
+    acc.config(200,1000,250,250,1200)
+    syncCtrl.config(0.012,0,400,400)
+    done=False
+    s = 0
+    sABS = 0
+    cnt = 0
+    while not done:
+        el = left_motor.angle()
+        er = right_motor.angle()
+        s += el - er
+        sABS += abs(el-er)
+        cnt += 1
+        power,done=acc.calculate(el,er)
+        # power = 500
+        powerB,powerC=syncCtrl.calculateWithSpeed(el,er,power,power)
+        left_motor.run(powerB)
+        right_motor.run(powerC)
+    base.stop_and_hold()
+    print(s/cnt)
+    print(sABS/cnt)

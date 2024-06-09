@@ -10,7 +10,7 @@ from tests import *
 from mainFunctions import *
 preflightChecks()
 reset()
-downClaw(70)
+
 take8Blocks()
 print("done")
 # tmpTest()

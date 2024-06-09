@@ -37,6 +37,7 @@ def take4block(angle):
     
 
 def take8Blocks():
+    downClaw(70)
     base.straight(-200)
     base.stop()
     left_motor.run_time(90,900)
@@ -46,7 +47,7 @@ def take8Blocks():
     take4block(195)
     
     base.straight(-150)
-    base.turn(-70)
+    base.turn(-80)
     base.stop_and_hold()
     base.stop()
     down_motor.run_time(1000,220*1.5,then=Stop.HOLD, wait=True)
@@ -56,15 +57,12 @@ def take8Blocks():
     downClaw()
     base.turn(-180)
     base.straight(-1000)
-    base.turn(70)
-    upClaw()
+    base.turn(75)
     base.stop()
     downClaw()
     down_motor.run_time(1000,250,then=Stop.HOLD, wait=True)
     
     take4block(195)
-    down_motor.run_time(1000,300*1.5,then=Stop.HOLD, wait=True)
-    down_motor.run_time(-1000,220*3,then=Stop.HOLD, wait=True)
     down_motor.run_time(1000,220*1.5,then=Stop.HOLD, wait=True)
     down_motor.run_time(1000,300*1.5,then=Stop.HOLD, wait=True)
     
