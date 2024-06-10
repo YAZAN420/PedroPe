@@ -8,12 +8,15 @@ from Utils import *
 from config import *
 from tests import *
 from mainFunctions import *
-# preflightChecks()
+import time
+
+preflightChecks()
 reset()
-# downClaw()
-# resetDetectedColor()
-# printValues()
 take8Blocks()
-# tmpTest()
 base.stop_and_hold()
+base.syncAcc(-100)
+base.turn(-90)
+base.move_mm(70, -600)
+line.move_until_black()
+line.correct()
 finish()

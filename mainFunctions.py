@@ -6,73 +6,71 @@ def putBlockOnBlock():
     down_motor.run_time(400, 300*1.5, then=Stop.HOLD, wait=True)
     down_motor.run(600)
     up_motor.run_angle(speed=300, rotation_angle=60, then=Stop.HOLD, wait=True)
-    base.syncMoveCm(5.7, 70)
-    up_motor.run_time(-300, 400)
+    base.syncMoveMm(57, 70)
+    up_motor.run_time(-250, 300)
     down_motor.stop()
     down_motor.run_angle(speed=-1000, rotation_angle=150,
                          then=Stop.HOLD, wait=True)
 
 
-def make2BlocksGood():
-    down_motor.run_time(1000, 300*1.5, then=Stop.HOLD, wait=True)
-    down_motor.run_time(-1000, 220*3, then=Stop.HOLD, wait=True)
-    down_motor.run_time(1000, 220*1.5, then=Stop.HOLD, wait=True)
-
-
-def take4block():
-    resetDetectedColor()
-    moveUntilBlock()
-    base.syncMoveCm(14, 150)
-    putBlockOnBlock()
-    base.straight(-20)
-    downClaw()
-    make2BlocksGood()
-    upClaw()
-    base.straight(100)
-    base.stop_and_hold()
-    downClaw()
-    #
-    base.move_cm(7, 150)
-    putBlockOnBlock()
-    base.straight(-20)
-    downClaw()
-    down_motor.run_time(1000, 300*1.5, then=Stop.HOLD, wait=True)
-    down_motor.run_time(-1000, 220*3, then=Stop.HOLD, wait=True)
-
-
 def take8Blocks():
-    downClaw(70)
-    base.straight(-200)
+    downClaw(50)
+    base.syncAcc(-300, 700)
     base.stop()
     left_motor.run_time(90, 900)
-    base.move_cm(16, 350)
-    take4block()
+    take4block(600)
 
-    base.straight(-150)
-    base.turn(-75)
+    base.syncMoveMm(106, -400)
+    base.turn(-85)
     base.stop_and_hold()
     base.stop()
     down_motor.run_time(1000, 220*1.5, then=Stop.HOLD, wait=True)
     upClaw()
     reset()
-    base.straight(200)
+    base.syncAcc(140, 150)
     downClaw()
     base.turn(-180)
-    base.syncAcc(-1400)
-    wait(5000)
-    base.turn(80)
+    base.syncAcc(-665, 700)
+
     base.stop()
+    right_motor.run_time(-1000, 1000, then=Stop.HOLD, wait=True)
+    base.stop()
+
     downClaw()
     down_motor.run_time(1000, 250, then=Stop.HOLD, wait=True)
 
-    take4block()
+    take4block(300)
+
+
+def take4block(speed):
+    resetDetectedColor()
+    moveUntilBlock(speed)
+    base.syncMoveMm(160, 150)
+    putBlockOnBlock()
+    base.straight(-20)
+    downClaw()
+    make2BlocksGood()
     down_motor.run_time(1000, 220*1.5, then=Stop.HOLD, wait=True)
-    down_motor.run_time(1000, 300*1.5, then=Stop.HOLD, wait=True)
+    upClaw()
+    base.straight(100)
+    downClaw()
+    #
+    base.move_mm(80, 150)
+    putBlockOnBlock()
+    base.straight(-20)
+    downClaw()
+    make2BlocksGood()
 
 
-def resetDetectedColor(angle=180):
+def resetDetectedColor(angle=201):
     down_motor.run_angle(speed=-10000, rotation_angle=angle,
                          then=Stop.HOLD, wait=True)
+
+
+def make2BlocksGood():
+    down_motor.run_time(1000, 300*1.5, then=Stop.HOLD, wait=True)
+    base.straight(-25)
+    down_motor.run_time(-1000, 220*3, then=Stop.HOLD, wait=True)
 
 
 def downClaw(duty=60):
@@ -83,17 +81,16 @@ def upClaw():
     up_motor.run_until_stalled(1000, then=Stop.HOLD, duty_limit=110)
 
 
-def moveUntilBlock():
-    base.start_tank(350, 350)
+def moveUntilBlock(speed):
+    base.start_tank(speed, speed)
     while (True):
         # h, s, v = front_sensor.hsv()
         # if (v >= 2):
         # break
         r, g, b = front_sensor.rgb()
-        if (r > 8):
+        if (r > 4):
             break
     base.stop_and_hold()
-    wait(6000)
 
 
 def reset():
@@ -105,5 +102,6 @@ def reset():
     up_motor.hold()
     print("reseted")
     ev3.speaker.beep()
-    down_motor.hold()
-    up_motor.hold()
+# def leaveBlcoks():
+#     while(True):
+#         base.drive(-200)

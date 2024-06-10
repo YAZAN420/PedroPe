@@ -1,12 +1,13 @@
 from pybricks.hubs import EV3Brick  # type: ignore
-from pybricks.ev3devices import Motor,ColorSensor,GyroSensor # type: ignore
-from pybricks.parameters import Port,Direction,Color,Stop # type: ignore
-from pybricks.tools import wait,StopWatch # type: ignore
+from pybricks.ev3devices import Motor, ColorSensor, GyroSensor  # type: ignore
+from pybricks.parameters import Port, Direction, Color, Stop  # type: ignore
+from pybricks.tools import wait, StopWatch  # type: ignore
 from pybricks.robotics import DriveBase  # type: ignore
 from base import Base
 import time
 import ColorSen
 from constants import *
+
 
 class LineController:
     """
@@ -50,15 +51,22 @@ class LineController:
         speed = abs(speed)
         pd, last_error, error = 0, 0, 0
         captured_angles = self.robotBase.capture_motor_angles()
-        while self.black_state()!=3:
+        while self.black_state() != 3:
             print(self.black_state())
-            error = (self.right_sensor.reflection() - self.left_sensor.reflection())
+            error = (self.right_sensor.reflection() -
+                     self.left_sensor.reflection())
             pd = (KP * error) + (KD * (error - last_error))
             self.robotBase.start_tank_dc(int(speed - pd), int(speed + pd))
             last_error = error
             # wait(15)
         self.robotBase.stop_and_hold()
-        return    
+        return
+
+    def move_until_black(self):
+        self.robotBase.stop()
+        while self.black_state() != 3:
+            self.robotBase.drive(600, 0)
+        self.robotBase.stop_and_hold()
 
     def stop_at_white(self, speed: int):
         """
@@ -69,80 +77,92 @@ class LineController:
         speed = abs(speed)
         pd, last_error, error = 0, 0, 0
         captured_angles = self.robotBase.capture_motor_angles()
-        while self.white_state()!=3:
+        while self.white_state() != 3:
             print(self.white_state())
-            error = (self.right_sensor.reflection() - self.left_sensor.reflection())
+            error = (self.right_sensor.reflection() -
+                     self.left_sensor.reflection())
             pd = (KP * error) + (KD * (error - last_error))
             self.robotBase.start_tank_dc(int(speed - pd), int(speed + pd))
             last_error = error
         self.robotBase.stop_and_hold()
-        return    
-    def correct(self,duration=0.75,speed=40):
-        kp=0.2
-        kd=0
+        return
+
+    def correct(self, duration=0.75, speed=40):
+        kp = 0.2
+        kd = 0
         pd, last_error, error = 0, 0, 0
         captured_angles = self.robotBase.capture_motor_angles()
         start_time = time.time()
         while (time.time() - start_time) < duration:
-           error = (self.right_sensor.reflection() - self.left_sensor.reflection())
-           pd = (kp * error) + (kd * (error - last_error))
-           self.robotBase.start_tank_dc(int(speed - pd), int(speed + pd))
-           last_error = error
+            error = (self.right_sensor.reflection() -
+                     self.left_sensor.reflection())
+            pd = (kp * error) + (kd * (error - last_error))
+            self.robotBase.start_tank_dc(int(speed - pd), int(speed + pd))
+            last_error = error
         self.robotBase.stop_and_hold()
         return
-    def followUntilSensorright(self,speed:int):
+
+    def followUntilSensorright(self, speed: int):
         print(self.black_state())
         speed = abs(speed)
         pd, last_error, error = 0, 0, 0
         captured_angles = self.robotBase.capture_motor_angles()
-        while self.black_state()!=1:
+        while self.black_state() != 1:
             print(self.black_state())
-            error = (self.right_sensor.reflection() - self.left_sensor.reflection())
+            error = (self.right_sensor.reflection() -
+                     self.left_sensor.reflection())
             pd = (KP * error) + (KD * (error - last_error))
             self.robotBase.start_tank_dc(int(speed - pd), int(speed + pd))
             last_error = error
             # wait(15)
         self.robotBase.stop_and_hold()
         return
-    def followUntilSensorleft(self,speed:int):
+
+    def followUntilSensorleft(self, speed: int):
         print(self.black_state())
         speed = abs(speed)
         pd, last_error, error = 0, 0, 0
         captured_angles = self.robotBase.capture_motor_angles()
-        while self.black_state()!=2:
+        while self.black_state() != 2:
             print(self.black_state())
-            error = (self.right_sensor.reflection() - self.left_sensor.reflection())
+            error = (self.right_sensor.reflection() -
+                     self.left_sensor.reflection())
             pd = (KP * error) + (KD * (error - last_error))
             self.robotBase.start_tank_dc(int(speed - pd), int(speed + pd))
             last_error = error
             # wait(15)
         self.robotBase.stop_and_hold()
         return
-    def turnUntilBlackleft(self,speed:int):
-        while self.black_state()!=2:
+
+    def turnUntilBlackleft(self, speed: int):
+        while self.black_state() != 2:
             self.robotBase.left_motor.run(speed)
             self.robotBase.right_motor.run(-speed)
         self.left_motor.hold()
         self.right_motor.hold()
-    def turnUntilBlackright(self,speed:int):
-        while self.black_state()!=1:
+
+    def turnUntilBlackright(self, speed: int):
+        while self.black_state() != 1:
             self.robotBase.left_motor.run(speed)
             self.robotBase.right_motor.run(-speed)
         self.robotBase.left_motor.hold()
         self.robotBase.right_motor.hold()
-    def turnUntilBlackright1(self,speed:int):
-        while self.black_state()!=1:
+
+    def turnUntilBlackright1(self, speed: int):
+        while self.black_state() != 1:
             self.robotBase.left_motor.run(-speed)
             self.robotBase.right_motor.run(speed)
         self.robotBase.left_motor.hold()
         self.robotBase.right_motor.hold()
-    def turnUntilBlackleft1(self,speed:int):
-        while self.black_state()!=2:
+
+    def turnUntilBlackleft1(self, speed: int):
+        while self.black_state() != 2:
             self.robotBase.left_motor.run(-speed)
             self.robotBase.right_motor.run(speed)
         self.robotBase.left_motor.hold()
         self.robotBase.right_motor.hold()
-    def follow_cm(self,distance_cm: float, speed : int = -85):
+
+    def follow_cm(self, distance_cm: float, speed: int = -85):
         """
         Starts line following using a PID algorithm. The robot stops when it has travelled a specific distance.
         :param speed: The maximum speed of the robot -100% to 100%
@@ -153,15 +173,18 @@ class LineController:
         speed = abs(speed)
         pd, last_error, error = 0, 0, 0
         captured_angles = self.robotBase.capture_motor_angles()
-        distance_degrees = (distance_cm / self.robotBase.wheel_circumference) * 360
+        distance_degrees = (
+            distance_cm / self.robotBase.wheel_circumference) * 360
         while self.robotBase.get_avg_motor_deg(captured_angles) < distance_degrees:
-            error = (self.right_sensor.reflection() - self.left_sensor.reflection())
-            pd = (KP* error) + (KD* (error - last_error))
+            error = (self.right_sensor.reflection() -
+                     self.left_sensor.reflection())
+            pd = (KP * error) + (KD * (error - last_error))
             self.robotBase.start_tank_dc(int(speed - pd), int(speed + pd))
             last_error = error
             # wait(15)
         self.robotBase.stop_and_hold()
         return
+
     def turn_to_line(self, direction: str, speed: int, mode: int):
         """
         Starts turning until a line is detected. Could be used before PID line following.
@@ -180,17 +203,16 @@ class LineController:
                 pass
             while self.white_state() not in [3, 2]:
                 print(self.white_state())
-                pass            
-                    
+                pass
 
         elif direction == "right":
             self.robotBase.start_tank(speed, -1 * mode * speed)
             while self.white_state() != 2:
                 pass
             while self.white_state() not in [3, 1]:
-                pass            
-        
+                pass
+
         while self.white_state() != 3:
-                pass       
+            pass
         self.robotBase.stop_and_hold()
         return

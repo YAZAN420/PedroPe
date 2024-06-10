@@ -69,6 +69,14 @@ def correctTest():
         line.correct()
 
 
+def testputblockonblock():
+    downClaw()
+    resetDetectedColor()
+    wait(2000)
+    putBlockOnBlock()
+    wait(5000)
+
+
 def lineTest():
     while True:
         waitForButtonPress()
@@ -80,23 +88,23 @@ def testU():
     waitForButtonPress()
     line.correct()
     line.followUntilSensorright(-70)
-    base.move_cm(10, 250)
+    base.move_mm(100, 250)
     base.turn(90)
     base.stop_and_hold()
     line.correct()
     line.stop_at_joint(-70)
-    base.move_cm(10, 250)
+    base.move_mm(100, 250)
     base.turn(-90)
     line.correct()
     line.stop_at_joint(-70)
     base.turn(180)
     line.correct()
     line.followUntilSensorright(-70)
-    base.move_cm(10, 450)
+    base.move_mm(100, 450)
     base.turn(90)
     line.correct()
     line.stop_at_joint(-70)
-    base.move_cm(10, 250)
+    base.move_mm(100, 250)
     base.turn(-90)
     line.correct()
     line.stop_at_joint(-85)
@@ -131,7 +139,7 @@ def testBlocks():
     print("1")
     up_motor.run_angle(speed=300, rotation_angle=60, then=Stop.HOLD, wait=True)
     print("2")
-    base.move_cm(5.5, 70)
+    base.move_mm(55, 70)
     print("3")
     up_motor.run_time(-300, 400)
     print("4")
@@ -171,6 +179,21 @@ def syncAccTest():
     print(sABS/cnt)
 
 
+def syncAccTest2():
+    while True:
+        base.syncAcc(500)
+        base.syncAcc(-500)
+
+
+def syncAccTest3():
+    base.settings(straight_speed=10000, straight_acceleration=700)
+    while True:
+        base.straight(200)
+        wait(400)
+        base.straight(-200)
+        wait(400)
+
+
 def syncTest():
     SyncCtrl.config(0.012, 0, 400, 400)
     done = False
@@ -190,3 +213,72 @@ def syncTest():
     base.stop_and_hold()
     print(s/cnt)
     print(sABS/cnt)
+
+
+def testDedected():
+    downClaw()
+    resetDetectedColor()
+    printValues()
+
+
+def littleDown():
+    up_motor.run_angle(-600, 25)
+
+
+def littleUp():
+    base.stop_and_hold()
+    wait(100)
+    base.move_mm(4, 100)
+    wait(100)
+    up_motor.run_angle(600, 25)
+    base.drive(-100, 0)
+
+
+def leaveTest():
+    upClaw()
+    up_motor.run_angle(-300, 65)
+    wait(2000)
+    base.drive(-100, 0)
+    wait(620)
+    littleDown()
+    wait(1000)
+    littleUp()
+    wait(260)
+    littleDown()
+    wait(1000)
+    littleUp()
+    wait(1000)
+    base.stop_and_hold()
+
+
+def testgar():
+    def little1Down():
+        up_motor.run_until_stalled(-1000, duty_limit=100, then=Stop.HOLD)
+
+    def little1Up():
+        up_motor.run_angle(600, 90)
+    upClaw()
+    up_motor.run_angle(-300, 60)
+    wait(2000)
+    base.drive(-100, 0)
+    wait(500)
+    base.stop_and_hold()
+    littleDown()
+    littleUp()
+    base.drive(-100, 0)
+    wait(530)
+    base.stop_and_hold()
+    littleDown()
+
+    base.drive(-100, 0)
+    wait(900)
+    littleUp()
+    base.drive(-100, 0)
+    wait(480)
+    base.stop_and_hold()
+    littleDown()
+    base.stop_and_hold()
+    base.drive(-100, 0)
+    wait(900)
+    base.stop_and_hold()
+    littleUp()

@@ -17,7 +17,7 @@ class Base(DriveBase):
     def __init__(self, left_motor: Motor,
                  right_motor: Motor,
                  wheel_diameter: float,
-                 axle_track: float
+                 axle_track: float,
                  ):
         self.wheel_circumference = math.pi * wheel_diameter * 0.1
         self.left_motor = left_motor
@@ -83,7 +83,7 @@ class Base(DriveBase):
         """
         return [int(self.left_motor.angle()), int(self.right_motor.angle())]
 
-    def move_cm(self, distance_in_cm: float, speed: int):
+    def move_mm(self, distance_in_mm: float, speed: int):
         """
         Starts moving at the specified speed and stops when the distance specified is reached.
         :param distance_in_cm: Positive Integer
@@ -92,17 +92,17 @@ class Base(DriveBase):
         self.start_tank(speed, speed)
         captured_angles = self.capture_motor_angles()
         distance_in_degrees = abs(
-            int((distance_in_cm / self.wheel_circumference) * 360))
+            (distance_in_mm / self.wheel_circumference) * 36)
         while self.get_avg_motor_deg(captured_angles) < distance_in_degrees:
             pass
         self.stop_and_hold()
         return
 
-    def syncMoveCm(self, distance_in_cm: float, speed: int):
+    def syncMoveMm(self, distance_in_Mm: float, speed: int):
         self.reset_angles()
         SyncCtrl.config(0.012, 0, speed, speed)
         distance_in_degrees = abs(
-            int((distance_in_cm / self.wheel_circumference) * 360))
+            int((distance_in_Mm / self.wheel_circumference) * 36))
         done = False
         while not done:
             el = self.left_motor.angle()
@@ -111,25 +111,30 @@ class Base(DriveBase):
             self.left_motor.run(powerB)
             self.right_motor.run(powerC)
             done = (abs(el)+abs(er))/2 >= distance_in_degrees
-        self.stop_and_hold()
+        self.left_motor.hold()
+        self.right_motor.hold()
 
-    def syncAcc(self, degrees, speedMin=200, speedMax=1000):
-        self.reset_angles()
-        if (degrees < 0):
-            speedMin = -speedMin
-            speedMax = -speedMax
-            degrees = -degrees
-        AccTwoEnc.config(speedMin, speedMax, 250, 250, degrees)
-        SyncCtrl.config(0.012, 0, 400, 400)
-        done = False
-        while not done:
-            el = self.left_motor.angle()
-            er = self.right_motor.angle()
-            power, done = AccTwoEnc.calculate(el, er)
-            powerB, powerC = SyncCtrl.calculateWithSpeed(el, er, power, power)
-            self.left_motor.run(powerB)
-            self.right_motor.run(powerC)
-        self.stop_and_hold()
+    def syncAcc(self, distance_in_Mm: float, acc=700, speedMin=150, speedMax=1000):
+        # self.reset_angles()
+        # if (distance_in_Mm < 0):
+        #     speedMin = -speedMin
+        #     speedMax = -speedMax
+        self.stop()
+        self.settings(straight_acceleration=acc)
+        degrees = (distance_in_Mm / self.wheel_circumference) * 36
+        # AccTwoEnc.config(speedMin, speedMax, 250, 250, degrees)
+        # SyncCtrl.config(0.012, 0, 400, 400)
+        # done = False
+        # while not done:
+        #     el = self.left_motor.angle()
+        #     er = self.right_motor.angle()
+        #     power, done = AccTwoEnc.calculate(el, er)
+        #     powerB, powerC = SyncCtrl.calculateWithSpeed(el, er, power, power)
+        #     self.left_motor.run(powerB)
+        #     self.right_motor.run(powerC)
+        # self.left_motor.hold()
+        # self.right_motor.hold()
+        self.straight(degrees)
 
     def start_moving(self, speed: int):
         """
