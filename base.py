@@ -6,6 +6,7 @@ from pybricks.robotics import DriveBase  # type: ignore
 import math
 from syncCtrl import *
 from AccTwoEnc import *
+from AccOneEnc import *
 
 
 class Base(DriveBase):
@@ -114,14 +115,14 @@ class Base(DriveBase):
         self.left_motor.hold()
         self.right_motor.hold()
 
-    def syncAcc(self, distance_in_Mm: float, acc=700, speedMin=150, speedMax=1000):
+    def syncAcc(self, distance_in_mm: float, acc=700, speedMin=150, speedMax=1000):
         # self.reset_angles()
         # if (distance_in_Mm < 0):
         #     speedMin = -speedMin
         #     speedMax = -speedMax
         self.stop()
         self.settings(straight_acceleration=acc)
-        degrees = (distance_in_Mm / self.wheel_circumference) * 36
+        self.straight(distance_in_mm)
         # AccTwoEnc.config(speedMin, speedMax, 250, 250, degrees)
         # SyncCtrl.config(0.012, 0, 400, 400)
         # done = False
@@ -134,7 +135,21 @@ class Base(DriveBase):
         #     self.right_motor.run(powerC)
         # self.left_motor.hold()
         # self.right_motor.hold()
-        self.straight(degrees)
+
+    def acc_one_motor(self, motor, degrees, speed=100):
+        sign = abs(speed + 1) - abs(speed)
+        speed /= 100
+        done = False
+        print(sign)
+        speed = abs(speed)
+        one_con = AccOneEnc.config(
+            200, 800*speed, degrees/2, degrees/2, degrees)
+        while not done:
+            encoder = abs(motor.angle())
+            power, done = one_con.calculate(encoder)
+            power *= sign
+            motor.run(power)
+        motor.hold()
 
     def start_moving(self, speed: int):
         """

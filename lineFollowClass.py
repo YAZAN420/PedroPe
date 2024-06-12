@@ -68,28 +68,29 @@ class LineController:
             self.robotBase.drive(600, 0)
         self.robotBase.stop_and_hold()
 
-    def stop_at_white(self, speed: int):
+    def stop_at_white(self, speed: float = 40):
         """
         Starts line following using a PID algorithm. The robot stops at the first intersection it senses.
         :param speed: The maximum speed of the robot -100% to 100%
         :return:(nothing)
         """
+        kp = 0.07
+        kd = 0
         speed = abs(speed)
         pd, last_error, error = 0, 0, 0
         captured_angles = self.robotBase.capture_motor_angles()
         while self.white_state() != 3:
-            print(self.white_state())
             error = (self.right_sensor.reflection() -
                      self.left_sensor.reflection())
-            pd = (KP * error) + (KD * (error - last_error))
+            pd = (kp * error) + (kd * (error - last_error))
             self.robotBase.start_tank_dc(int(speed - pd), int(speed + pd))
             last_error = error
         self.robotBase.stop_and_hold()
         return
 
-    def correct(self, duration=0.75, speed=40):
-        kp = 0.2
-        kd = 0
+    def correct(self, duration=0.75, speed=50):
+        kp = 0.12
+        kd = 1
         pd, last_error, error = 0, 0, 0
         captured_angles = self.robotBase.capture_motor_angles()
         start_time = time.time()

@@ -15,7 +15,7 @@ def putBlockOnBlock():
 
 def take8Blocks():
     downClaw(50)
-    base.syncAcc(-300, 700)
+    base.syncAcc(-421, 700)
     base.stop()
     left_motor.run_time(90, 900)
     take4block(600)
@@ -27,10 +27,10 @@ def take8Blocks():
     down_motor.run_time(1000, 220*1.5, then=Stop.HOLD, wait=True)
     upClaw()
     reset()
-    base.syncAcc(140, 150)
+    base.syncAcc(196, 150)
     downClaw()
     base.turn(-180)
-    base.syncAcc(-665, 700)
+    base.syncAcc(-933, 700)
 
     base.stop()
     right_motor.run_time(-1000, 1000, then=Stop.HOLD, wait=True)
