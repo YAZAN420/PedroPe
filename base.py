@@ -138,15 +138,14 @@ class Base(DriveBase):
 
     def acc_one_motor(self, motor, degrees, speed=100):
         sign = abs(speed + 1) - abs(speed)
+        speed = abs(speed)
         speed /= 100
         done = False
-        print(sign)
-        speed = abs(speed)
-        one_con = AccOneEnc.config(
+        AccOneEnc.config(
             200, 800*speed, degrees/2, degrees/2, degrees)
         while not done:
             encoder = abs(motor.angle())
-            power, done = one_con.calculate(encoder)
+            power, done = AccOneEnc.calculate(encoder)
             power *= sign
             motor.run(power)
         motor.hold()

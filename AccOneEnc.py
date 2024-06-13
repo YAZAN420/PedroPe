@@ -11,36 +11,36 @@ class AccOneEnc:
         :param decelDist: Distance over which the motor decelerates.
         :param totalDist: Total distance the motor needs to cover.
         """
-        controller = cls()
-        controller.minPower = minPower
-        controller.maxPower = maxPower
-        controller.accelDist = accelDist
-        controller.decelDist = decelDist
-        controller.totalDist = totalDist
-        return controller
-
-    def calculate(self, encoder):
+        cls.minPower = minPower
+        cls.maxPower = maxPower
+        cls.accelDist = accelDist
+        cls.decelDist = decelDist
+        cls.totalDist = totalDist
+    
+    
+    @classmethod
+    def calculate(cls, encoder):
         """
         Calculate the power output based on the encoder reading.
         
         :param encoder: The current encoder reading (distance covered).
         :return: Tuple containing power_output and done status.
         """
-        if encoder < self.accelDist:
+        if encoder < cls.accelDist:
             # Accelerating phase
-            power_output = self.minPower + (self.maxPower - self.minPower) * (encoder / self.accelDist)
-        elif encoder > self.totalDist - self.decelDist:
+            power_output = cls.minPower + (cls.maxPower - cls.minPower) * (encoder / cls.accelDist)
+        elif encoder > cls.totalDist - cls.decelDist:
             # Decelerating phase
-            remaining_dist = self.totalDist - encoder
-            power_output = self.minPower + (self.maxPower - self.minPower) * (remaining_dist / self.decelDist)
+            remaining_dist = cls.totalDist - encoder
+            power_output = cls.minPower + (cls.maxPower - cls.minPower) * (remaining_dist / cls.decelDist)
         else:
             # Constant speed phase
-            power_output = self.maxPower
+            power_output = cls.maxPower
         
         # Clamp power_output between minPower and maxPower
-        power_output = max(self.minPower, min(self.maxPower, power_output))
+        power_output = max(cls.minPower, min(cls.maxPower, power_output))
         
         # Determine if the target distance has been reached
-        done = encoder >= self.totalDist
+        done = encoder >= cls.totalDist
 
         return power_output, done
