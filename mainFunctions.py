@@ -14,22 +14,24 @@ def putBlockOnBlock():
 
 
 def take8Blocks():
-    downClaw(50)
+    downClaw()
     base.syncAcc(-421, 700)
     base.stop()
     left_motor.run_time(90, 900)
     take4block(600)
 
-    base.syncMoveMm(106, -400)
-    base.turn(-85)
+    base.syncAcc(-106, 200)
+    wait(2000)
+    base.turn(-80)
+    wait(4000)
     base.stop_and_hold()
-    base.stop()
     down_motor.run_time(1000, 220*1.5, then=Stop.HOLD, wait=True)
     upClaw()
     reset()
     base.syncAcc(196, 150)
     downClaw()
     base.turn(-180)
+    wait(4000)
     base.syncAcc(-933, 700)
 
     base.stop()
@@ -73,7 +75,7 @@ def make2BlocksGood():
     down_motor.run_time(-1000, 220*3, then=Stop.HOLD, wait=True)
 
 
-def downClaw(duty=60):
+def downClaw(duty=80):
     up_motor.run_until_stalled(-6000, then=Stop.HOLD, duty_limit=duty)
 
 
@@ -94,6 +96,7 @@ def moveUntilBlock(speed):
 
 
 def reset():
+    print("reset: ")
     up_motor.run(1000)
     down_motor.run(1000)
     up_motor.run_until_stalled(6000, then=Stop.HOLD, duty_limit=75)

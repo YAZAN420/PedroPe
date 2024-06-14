@@ -2,8 +2,9 @@ from pybricks.tools import wait,StopWatch # type: ignore
 from config import *
 
 def preflightChecks():
-    print("The voltage is :" , ev3.battery.voltage())
-    if ev3.battery.voltage() < 8000:
+    voltage = ev3.battery.voltage()
+    print("The voltage is :" , voltage) 
+    if voltage < 8000:
         ev3.speaker.beep(frequency=200, duration=1000)    
         print("Low battery.")
         from sys import exit               

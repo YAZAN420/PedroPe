@@ -137,6 +137,8 @@ class Base(DriveBase):
         # self.right_motor.hold()
 
     def acc_one_motor(self, motor, degrees, speed=100):
+        self.stop()
+        motor.reset_angle(0)
         sign = abs(speed + 1) - abs(speed)
         speed = abs(speed)
         speed /= 100
@@ -149,6 +151,22 @@ class Base(DriveBase):
             power *= sign
             motor.run(power)
         motor.hold()
+
+    def move_sideway(self, degrees, speed, right):
+        if (right):
+            self.acc_one_motor(self.left_motor, degrees, speed)
+            wait(300)
+            self.acc_one_motor(self.right_motor, degrees, speed)
+        else:
+            self.acc_one_motor(self.right_motor, degrees, speed)
+            wait(300)
+            self.acc_one_motor(self.left_motor, degrees, speed)
+
+    def turn_until_method(self, function, speed=60):
+        self.start_tank(speed, -speed)
+        while (not function()):
+            pass
+        self.stop_and_hold()
 
     def start_moving(self, speed: int):
         """

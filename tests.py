@@ -55,7 +55,7 @@ def lineAndTurn():
     line.stop_at_joint(-70)
 
 
-def testClaws():
+def testClaws2():
     up_motor.run_until_stalled(1000, then=Stop.HOLD)
     down_motor.run_until_stalled(1000, then=Stop.HOLD)
     down_motor.run(-500)
@@ -282,3 +282,57 @@ def testgar():
     wait(900)
     base.stop_and_hold()
     littleUp()
+
+
+def follow_test():
+    downClaw()
+    while True:
+        waitForButtonPress()
+        line.follow_cm(30)
+
+
+def test_pipe():
+    while True:
+        reset()
+        wait(2000)
+        downClaw()
+        wait(2000)
+        up_motor.run_angle(speed=80000, rotation_angle=30, wait=False)
+        down_motor.run_angle(speed=-1000, rotation_angle=260, wait=False)
+        wait(6000)
+
+
+def testForSortingRYYR():
+    downClaw()
+    wait(4000)
+    down_motor.run_time(1000, 300*1.5)
+    down_motor.run_time(speed=-1000, time=3500, wait=True)
+    down_motor.run_angle(speed=1000, rotation_angle=140, wait=True)
+    # base.move_mm(150,-100)
+    upClaw()
+    base.syncAcc(-200, 100)
+    downClaw()
+    down_motor.run_time(1000, 300*1.5)
+    base.syncAcc(-60, 100)
+    upClaw()
+    base.syncAcc(285, 100)
+    wait(4000)
+    print("1")
+    up_motor.run_angle(speed=-1000, rotation_angle=80, wait=True)
+    print("2")
+    down_motor.run_angle(speed=-1000, rotation_angle=100)
+    print("3")
+    base.syncAcc(-15, 100)
+    print("4")
+    up_motor.run_angle(speed=-1000, rotation_angle=25, wait=True)
+    print("5")
+    base.syncAcc(-120, 100)
+    print("6")
+    upClaw()
+    print("7")
+    base.syncAcc(-180, 100)
+    print("8")
+    downClaw()
+    print("9")
+    down_motor.run_time(speed=1000, time=3500, wait=True)
+    print("10")

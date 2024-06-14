@@ -74,8 +74,8 @@ class LineController:
         :param speed: The maximum speed of the robot -100% to 100%
         :return:(nothing)
         """
-        kp = 0.07
-        kd = 0
+        kp = 0.09
+        kd = 1
         speed = abs(speed)
         pd, last_error, error = 0, 0, 0
         captured_angles = self.robotBase.capture_motor_angles()

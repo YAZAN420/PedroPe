@@ -11,14 +11,9 @@ from mainFunctions import *
 from garbage import *
 from AccOneEnc import *
 preflightChecks()
-reset()
-# base.turn(93)
+# reset()
 # garbage.run()
-
-
-base.acc_one_motor(left_motor, 200, -60)
-wait(300)
-base.acc_one_motor(right_motor, 200, -60)
+testForSortingRYYR()
 
 
 # take8Blocks()

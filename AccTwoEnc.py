@@ -1,6 +1,5 @@
 class AccTwoEnc:
 
-    @classmethod
     def config(cls, minPower, maxPower, accelDist, decelDist, totalDist):
         cls.min_power = abs(minPower)
         cls.max_power = abs(maxPower)
