@@ -2,9 +2,7 @@ from config import *
 from mainFunctions import *
 from tests import *
 
-
 class garbage:
-
     @classmethod
     def move_until_white(cls, sensor=front_sensor):
         base.start_tank(70, 70)

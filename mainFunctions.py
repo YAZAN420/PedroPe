@@ -15,36 +15,33 @@ def putBlockOnBlock():
 
 def take8Blocks():
     downClaw()
-    base.syncAcc(-421, 700)
+    base.syncAcc(-400, 700)
     base.stop()
     left_motor.run_time(90, 900)
-    take4block(600)
-
-    base.syncAcc(-106, 200)
-    wait(2000)
+    take4block(600, 1)
+    base.syncAcc(-470, 200)
     base.turn(-80)
-    wait(4000)
+    base.move_mm(250, -200)
     base.stop_and_hold()
-    down_motor.run_time(1000, 220*1.5, then=Stop.HOLD, wait=True)
+    down_motor.run_time(400, 220*1.5, then=Stop.HOLD, wait=True)
     upClaw()
     reset()
-    base.syncAcc(196, 150)
+    base.syncAcc(200, 60)
     downClaw()
     base.turn(-180)
-    wait(4000)
-    base.syncAcc(-933, 700)
-
+    up_motor.stop()
+    down_motor.stop()
+    base.syncAcc(-900, 450)
+    base.turn(-120)
     base.stop()
-    right_motor.run_time(-1000, 1000, then=Stop.HOLD, wait=True)
-    base.stop()
-
+    left_motor.run_time(-350, 800, then=Stop.HOLD, wait=True)
     downClaw()
-    down_motor.run_time(1000, 250, then=Stop.HOLD, wait=True)
-
+    down_motor.stop()
+    down_motor.run_time(1000, 400, then=Stop.HOLD, wait=True)
     take4block(300)
 
 
-def take4block(speed):
+def take4block(speed, num=0):
     resetDetectedColor()
     moveUntilBlock(speed)
     base.syncMoveMm(160, 150)
@@ -54,9 +51,14 @@ def take4block(speed):
     make2BlocksGood()
     down_motor.run_time(1000, 220*1.5, then=Stop.HOLD, wait=True)
     upClaw()
+    # if (num == 1):
+    #     base.move_mm(45, 200)
+    #     downClaw(duty=50)
+    #     upClaw()
+    #     base.straight(70)
+    # else:
     base.straight(100)
     downClaw()
-    #
     base.move_mm(80, 150)
     putBlockOnBlock()
     base.straight(-20)
@@ -64,7 +66,7 @@ def take4block(speed):
     make2BlocksGood()
 
 
-def resetDetectedColor(angle=201):
+def resetDetectedColor(angle=200):
     down_motor.run_angle(speed=-10000, rotation_angle=angle,
                          then=Stop.HOLD, wait=True)
 
@@ -75,7 +77,7 @@ def make2BlocksGood():
     down_motor.run_time(-1000, 220*3, then=Stop.HOLD, wait=True)
 
 
-def downClaw(duty=80):
+def downClaw(duty=40):
     up_motor.run_until_stalled(-6000, then=Stop.HOLD, duty_limit=duty)
 
 
@@ -86,9 +88,6 @@ def upClaw():
 def moveUntilBlock(speed):
     base.start_tank(speed, speed)
     while (True):
-        # h, s, v = front_sensor.hsv()
-        # if (v >= 2):
-        # break
         r, g, b = front_sensor.rgb()
         if (r > 4):
             break
@@ -105,6 +104,3 @@ def reset():
     up_motor.hold()
     print("reseted")
     ev3.speaker.beep()
-# def leaveBlcoks():
-#     while(True):
-#         base.drive(-200)

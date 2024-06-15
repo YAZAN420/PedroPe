@@ -11,16 +11,12 @@ from mainFunctions import *
 from garbage import *
 from AccOneEnc import *
 preflightChecks()
-# reset()
-# garbage.run()
-testForSortingRYYR()
-
-
-# take8Blocks()
-# base.stop_and_hold()
-# base.syncAcc(-100)
-# base.turn(-90)
-# base.move_mm(70, -600)
-# line.move_until_black()
-# line.correct()
+reset()
+downClaw()
+take8Blocks()
+base.syncAcc(140, 100)
+base.turn(100)
+base.move_mm(200, -1000)
+base.stop_and_hold()
+line.stop_at_joint(200)
 finish()
