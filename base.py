@@ -121,7 +121,7 @@ class Base(DriveBase):
         #     speedMin = -speedMin
         #     speedMax = -speedMax
         self.stop()
-        self.settings(straight_acceleration=acc)
+        # self.settings(straight_acceleration=acc)
         self.straight(distance_in_mm)
         # AccTwoEnc.config(speedMin, speedMax, 250, 250, degrees)
         # SyncCtrl.config(0.012, 0, 400, 400)
