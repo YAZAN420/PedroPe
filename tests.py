@@ -306,6 +306,29 @@ def test_pipe():
         down_motor.run_angle(speed=-1000, rotation_angle=260, wait=False)
         wait(6000)
 
+def testleftandrirght():
+    while True:
+        wait(2000)
+        left_motor.reset_angle(0)
+        right_motor.reset_angle(0)
+        wait(500)
+        left_motor.run_angle(speed=4000, rotation_angle=719, wait=False)
+        right_motor.run_angle(speed=4000, rotation_angle=719, wait=True)
+        left_motor.hold()
+        right_motor.hold()
+        print(left_motor.angle())
+        print(right_motor.angle())
+        wait(2000)
+        left_motor.reset_angle(0)
+        right_motor.reset_angle(0)
+        wait(500)
+        left_motor.run_angle(speed=-4000, rotation_angle=719, wait=False)
+        right_motor.run_angle(speed=-4000, rotation_angle=719, wait=True)
+        left_motor.hold()
+        right_motor.hold()
+        print(left_motor.angle())
+        print(right_motor.angle())
+
 
 def testForSortingRYYR():
     downClaw()

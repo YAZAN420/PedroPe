@@ -114,7 +114,8 @@ class Base(DriveBase):
             done = (abs(el)+abs(er))/2 >= distance_in_degrees
         self.left_motor.hold()
         self.right_motor.hold()
-
+    # def movedegByMe():
+        
     def syncAcc(self, distance_in_mm: float, acc=500, speedMin=150, speedMax=1000):
         # self.reset_angles()
         # if (distance_in_Mm < 0):

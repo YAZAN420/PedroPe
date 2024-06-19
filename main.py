@@ -10,12 +10,15 @@ from tests import *
 from mainFunctions import *
 from garbage import *
 from AccOneEnc import *
+import time
 
 preflightChecks()
 # reset()
 # downClaw()
 # take8Blocks()
 # make2buildRedAndYellow()
+
+
 downClaw()
 wait(4000)
 down_motor.run_time(1000, 300*1.5)
