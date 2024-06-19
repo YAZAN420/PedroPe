@@ -3,12 +3,12 @@ from Utils import *
 
 
 def putBlockOnBlock():
-    down_motor.run_time(500, 300*2, then=Stop.HOLD, wait=True)
-    # down_motor.run(600)
+    down_motor.run_time(400, 300*1.5, then=Stop.HOLD, wait=True)
+    down_motor.run(600)
     up_motor.run_angle(speed=300, rotation_angle=60, then=Stop.HOLD, wait=True)
-    base.move_mm(58, 110)
+    base.syncMoveMm(57, 70)
     up_motor.run_time(-250, 300)
-    # down_motor.stop()
+    down_motor.stop()
     down_motor.run_angle(speed=-1000, rotation_angle=150,
                          then=Stop.HOLD, wait=True)
 
@@ -20,13 +20,13 @@ def take8Blocks():
     left_motor.run_angle(speed=-300, rotation_angle=240)
     right_motor.run_angle(speed=-300, rotation_angle=270)
     # base.stop()
-    left_motor.run_time(90, 600)
+    left_motor.run_time(90, 700)
     take4block(500, 1)
     down_motor.run_time(440, 220*3, then=Stop.HOLD, wait=True)
     # base.syncAcc(-470, 200)
-    base.straight(-570)
+    base.straight(-330)
     base.straight(100)
-    base.turn(-130)
+    base.turn(-110)
     base.move_mm(200, -200)
     base.stop_and_hold()
     down_motor.run_time(-400, 220*1.5, then=Stop.HOLD, wait=True)
@@ -34,7 +34,7 @@ def take8Blocks():
     reset()
     base.move_mm(200, 100)
     downClaw()
-    base.turn(-185)
+    base.turn(-180)
     base.straight(-900)
     base.turn(-120)
     base.stop()
@@ -104,8 +104,8 @@ def reset():
     ev3.speaker.beep()
 
 
-def make2buildRedAndYellow():
-    base.straight(65)
+def make2buildRedAndYellow(mode=1):
+    base.straight(75 if mode == 1 else 120)
     base.turn(130)
     base.move_mm(300, -1000)
     base.stop_and_hold()
@@ -119,24 +119,33 @@ def make2buildRedAndYellow():
     base.move_mm(100, 400)
     base.turn(-95)
     base.move_mm(10, 400)
+    leaveblocks()
+
+
+def leaveblocks():
     base.stop()
-    down_motor.run_time(speed=1000, time=400, then=Stop.HOLD, wait=True)
-    base.move_mm(130, -300)
+    down_motor.run_angle(speed=1000, rotation_angle=140, wait=True)
+    base.syncAcc(-130)
     upClaw()
-    base.move_mm(230, -300)
+    base.syncAcc(-175)
     downClaw()
-    down_motor.run_time(speed=1000, time=400, then=Stop.HOLD, wait=True)
-    up_motor.run_angle(speed=300, rotation_angle=120,
-                       then=Stop.HOLD, wait=True)
-    base.move_mm(310, 300)
-    up_motor.run_time(-250, 300)
-    down_motor.run_time(speed=-1000, time=400, then=Stop.HOLD, wait=True)
-    base.move_mm(300, -300)
-    #
+    down_motor.run_time(speed=1000, time=420)
+    base.syncAcc(-45)
+    up_motor.run_angle(speed=300, rotation_angle=120)
+    base.syncAcc(360)
+    up_motor.run_time(speed=-250, time=400)
+    down_motor.run_angle(speed=-1000, rotation_angle=85)
+    upClaw()
+    base.syncAcc(-20)
+    up_motor.run_angle(speed=-300, rotation_angle=110)
+    base.syncAcc(-120)
+    upClaw()
+    base.syncAcc(-120)
+    #yellow build
     downClaw()
-    down_motor.run_time(speed=1000, time=400, then=Stop.HOLD, wait=True)
-    up_motor.run_angle(speed=300, rotation_angle=120,
-                       then=Stop.HOLD, wait=True)
-    base.move_mm(100, 300)
-    up_motor.run_time(-250, 300)
-    down_motor.run_time(speed=-1000, time=400, then=Stop.HOLD, wait=True)
+    down_motor.run_time(speed=1000, time=420)
+    base.syncAcc(-35)
+    up_motor.run_angle(speed=300, rotation_angle=120)
+    base.syncAcc(105)
+    up_motor.run_time(-250, 400)
+    down_motor.run_time(speed=-1000, time=400)

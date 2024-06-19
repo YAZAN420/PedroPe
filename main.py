@@ -12,13 +12,12 @@ from garbage import *
 from AccOneEnc import *
 
 preflightChecks()
-reset()
-downClaw()
-resetDetectedColor()
-while (True):
-    downClaw()
-    wait(4000)
-    putBlockOnBlock()
+# reset()
+# downClaw()
 # take8Blocks()
 # make2buildRedAndYellow()
-finish()
+downClaw()
+wait(4000)
+down_motor.run_time(1000, 300*1.5)
+down_motor.run_time(speed=-1000, time=3500, wait=True)
+leaveblocks()

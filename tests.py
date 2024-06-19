@@ -233,6 +233,11 @@ def littleUp():
     up_motor.run_angle(600, 25)
     base.drive(-100, 0)
 
+def testforputblockonblock():
+    while (True):
+        downClaw()
+        wait(4000)
+        putBlockOnBlock()
 
 def leaveTest():
     upClaw()
