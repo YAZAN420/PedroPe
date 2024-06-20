@@ -70,10 +70,11 @@ def correctTest():
 
 
 def testputblockonblock():
+    reset()
     downClaw()
     resetDetectedColor()
-    wait(2000)
-    putBlockOnBlock()
+    wait(2500)
+    putBlockOnBlockWithGood()
     wait(5000)
 
 
@@ -233,11 +234,13 @@ def littleUp():
     up_motor.run_angle(600, 25)
     base.drive(-100, 0)
 
+
 def testforputblockonblock():
     while (True):
         downClaw()
         wait(4000)
         putBlockOnBlock()
+
 
 def leaveTest():
     upClaw()
@@ -306,6 +309,7 @@ def test_pipe():
         down_motor.run_angle(speed=-1000, rotation_angle=260, wait=False)
         wait(6000)
 
+
 def testleftandrirght():
     while True:
         wait(2000)
@@ -364,6 +368,8 @@ def testForSortingRYYR():
     print("9")
     down_motor.run_time(speed=1000, time=3500, wait=True)
     print("10")
+
+
 def testagainforput4():
     downClaw()
     down_motor.run_time(1000, 300*1.5)

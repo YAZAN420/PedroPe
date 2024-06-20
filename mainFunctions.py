@@ -6,11 +6,18 @@ def putBlockOnBlock():
     down_motor.run_time(400, 300*1.5, then=Stop.HOLD, wait=True)
     down_motor.run(600)
     up_motor.run_angle(speed=300, rotation_angle=60, then=Stop.HOLD, wait=True)
-    base.syncMoveMm(57, 70)
+    base.move_mm(50, 70)
     up_motor.run_time(-250, 300)
     down_motor.stop()
     down_motor.run_angle(speed=-1000, rotation_angle=150,
                          then=Stop.HOLD, wait=True)
+
+
+def putBlockOnBlockWithGood():
+    putBlockOnBlock()
+    downClaw()
+    make2BlocksGood()
+    akbs()
 
 
 def take8Blocks():
@@ -24,15 +31,16 @@ def take8Blocks():
     take4block(500, 1)
     down_motor.run_time(440, 220*3, then=Stop.HOLD, wait=True)
     # base.syncAcc(-470, 200)
-    base.straight(-330)
+    base.straight(-350)
     base.straight(100)
-    base.turn(-110)
-    base.move_mm(200, -200)
+    base.turn(-130)
+    base.move_mm(300, -200)
     base.stop_and_hold()
     down_motor.run_time(-400, 220*1.5, then=Stop.HOLD, wait=True)
     upClaw()
-    reset()
+    # up_motor.run_angle(1000, 220)
     base.move_mm(200, 100)
+    reset()
     downClaw()
     base.turn(-190)
     base.straight(-900)
@@ -48,20 +56,17 @@ def take8Blocks():
 def take4block(speed, num=0):
     resetDetectedColor()
     moveUntilBlock(speed)
-    base.move_mm(140, 150)
-    putBlockOnBlock()
-    base.straight(-20)
-    downClaw()
-    make2BlocksGood()
-    down_motor.run_time(1000, 220*1.5, then=Stop.HOLD, wait=True)
-    upClaw()
-    base.straight(100)
+    base.move_mm(150, 150)
+    putBlockOnBlockWithGood()
+    resetDetectedColor()
+    base.straight(140)
     downClaw()
     base.move_mm(85, 150)
-    putBlockOnBlock()
-    base.straight(-20)
+    putBlockOnBlockWithGood()
+    resetDetectedColor()
     downClaw()
-    make2BlocksGood()
+    base.move_mm(40, 1000)
+    down_motor.run_time(-1000, 220*3, then=Stop.HOLD, wait=False)
 
 
 def resetDetectedColor(angle=200):
@@ -70,9 +75,19 @@ def resetDetectedColor(angle=200):
 
 
 def make2BlocksGood():
-    down_motor.run_time(1000, 300*1.5, then=Stop.HOLD, wait=True)
+    down_motor.run_time(1000, 300*1.5)
     base.straight(-25)
-    down_motor.run_time(-1000, 220*3, then=Stop.HOLD, wait=True)
+    down_motor.run_time(-1000, 220*3)
+
+
+def akbs():
+    down_motor.run_angle(400, 150)
+    base.syncAcc(-40)
+    upClaw()
+    reset()
+    up_motor.run_time(speed=-1000, time=640, wait=False)
+    down_motor.run_time(speed=-1000, time=640)
+    reset()
 
 
 def downClaw(duty=70):
@@ -130,27 +145,29 @@ def leaveblocks():
     down_motor.run_time(speed=1000, time=420)
     base.syncAcc(-45)
     up_motor.run_angle(speed=300, rotation_angle=90)
-    base.syncAcc(350, 200)
+    base.syncAcc(365, 200)
     base.stop()
-    left_motor.run_angle(speed=300,rotation_angle=15)
-    up_motor.run_time(speed=-300, time=360)
-    down_motor.run_angle(speed=-1000, rotation_angle=85)
+    # uninstall
+    up_motor.run_time(speed=-300, time=300)
+    down_motor.run_angle(speed=-1000, rotation_angle=90)
     upClaw()
-    base.syncAcc(-30)
+    base.syncAcc(-60)
+    down_motor.run_angle(speed=600, rotation_angle=8)
     up_motor.stop()
-    up_motor.run_angle(speed=-300, rotation_angle=110)
+    up_motor.run_angle(speed=-300, rotation_angle=95)
     base.syncAcc(-120)
     upClaw()
     base.syncAcc(-120)
-    # yellow build
+    wait(4000)
+    # # yellow build
     downClaw()
     down_motor.run_time(speed=1000, time=420)
-    base.syncAcc(-35)
+    base.syncAcc(-50)
     up_motor.run_angle(speed=300, rotation_angle=120)
-    base.syncAcc(105)
+    base.syncAcc(120)
     base.stop()
-    left_motor.run_angle(speed=300,rotation_angle=10)
+    # left_motor.run_angle(speed=300, rotation_angle=10)
     up_motor.run_time(-250, 400)
-    down_motor.run_time(speed=-1000, time=400)
-    down_motor.run_angle(speed=1000, rotation_angle=85)
-    base.syncAcc(-100)
+    # down_motor.run_time(speed=-1000, time=400)
+    down_motor.run_angle(speed=-1000, rotation_angle=100)
+    base.syncAcc(-200)
