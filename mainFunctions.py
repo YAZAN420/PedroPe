@@ -6,18 +6,11 @@ def putBlockOnBlock():
     down_motor.run_time(400, 300*1.5, then=Stop.HOLD, wait=True)
     down_motor.run(600)
     up_motor.run_angle(speed=300, rotation_angle=60, then=Stop.HOLD, wait=True)
-    base.move_mm(50, 70)
+    base.syncMoveMm(57, 70)
     up_motor.run_time(-250, 300)
     down_motor.stop()
     down_motor.run_angle(speed=-1000, rotation_angle=150,
                          then=Stop.HOLD, wait=True)
-
-
-def putBlockOnBlockWithGood():
-    putBlockOnBlock()
-    downClaw()
-    make2BlocksGood()
-    akbs()
 
 
 def take8Blocks():
@@ -31,18 +24,17 @@ def take8Blocks():
     take4block(500, 1)
     down_motor.run_time(440, 220*3, then=Stop.HOLD, wait=True)
     # base.syncAcc(-470, 200)
-    base.straight(-350)
+    base.straight(-330)
     base.straight(100)
-    base.turn(-130)
-    base.move_mm(300, -200)
+    base.turn(-110)
+    base.move_mm(200, -200)
     base.stop_and_hold()
     down_motor.run_time(-400, 220*1.5, then=Stop.HOLD, wait=True)
     upClaw()
-    # up_motor.run_angle(1000, 220)
-    base.move_mm(200, 100)
     reset()
+    base.move_mm(200, 100)
     downClaw()
-    base.turn(-190)
+    base.turn(-185)
     base.straight(-900)
     base.turn(-120)
     base.stop()
@@ -57,16 +49,19 @@ def take4block(speed, num=0):
     resetDetectedColor()
     moveUntilBlock(speed)
     base.move_mm(150, 150)
-    putBlockOnBlockWithGood()
-    resetDetectedColor()
-    base.straight(140)
+    putBlockOnBlock()
+    base.straight(-20)
+    downClaw()
+    make2BlocksGood()
+    down_motor.run_time(1000, 220*1.5, then=Stop.HOLD, wait=True)
+    upClaw()
+    base.straight(100)
     downClaw()
     base.move_mm(85, 150)
-    putBlockOnBlockWithGood()
-    resetDetectedColor()
+    putBlockOnBlock()
+    base.straight(-20)
     downClaw()
-    base.move_mm(40, 1000)
-    down_motor.run_time(-1000, 220*3, then=Stop.HOLD, wait=False)
+    make2BlocksGood()
 
 
 def resetDetectedColor(angle=200):
@@ -119,8 +114,9 @@ def reset():
     ev3.speaker.beep()
 
 
-def make2buildRedAndYellow(mode=1):
-    base.straight(75 if mode == 1 else 120)
+def make2buildRedAndYellow(mode=2):
+    line.stop_at_white(50)
+    base.straight(-130 if mode == 1 else -320)
     base.turn(130)
     base.move_mm(300, -1000)
     base.stop_and_hold()
@@ -130,7 +126,7 @@ def make2buildRedAndYellow(mode=1):
     line.correct()
     line.stop_at_white(70)
     base.move_mm(100, 400)
-    base.turn(-95)
+    base.turn(-90 if mode == 1 else 90)
     base.move_mm(10, 400)
     leaveblocks()
 
@@ -151,14 +147,14 @@ def leaveblocks():
     up_motor.run_time(speed=-300, time=300)
     down_motor.run_angle(speed=-1000, rotation_angle=90)
     upClaw()
-    base.syncAcc(-60)
+    base.syncAcc(-59)
     down_motor.run_angle(speed=600, rotation_angle=8)
     up_motor.stop()
     up_motor.run_angle(speed=-300, rotation_angle=95)
     base.syncAcc(-120)
     upClaw()
-    base.syncAcc(-120)
-    wait(4000)
+    base.syncAcc(-130)
+    wait(1000)
     # # yellow build
     downClaw()
     down_motor.run_time(speed=1000, time=420)

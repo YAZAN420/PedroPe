@@ -13,24 +13,11 @@ from AccOneEnc import *
 import time
 
 preflightChecks()
-# reset()
-# while True:
-#     testputblockonblock()
-#     wait(3000)
-
-# downClaw()
-# take8Blocks()
-# make2buildRedAndYellow()
+reset()
+downClaw()
+take8Blocks()
+make2buildRedAndYellow()
 
 
-while True:
-    downClaw()
-    wait(2000)
-    down_motor.run_time(1000, 300*1.5)
-    down_motor.run_time(speed=-1000, time=3500, wait=True)
-    leaveblocks()
-    wait(2000)
-    down_motor.stop()
-    up_motor.stop()
-    wait(10000)
+# testleaveblocksagain()
 finish()
