@@ -16,7 +16,7 @@ preflightChecks()
 reset()
 downClaw()
 take8Blocks()
-make2buildRedAndYellow()
+make2buildRedAndYellow(1)
 
 
 # testleaveblocksagain()

@@ -116,13 +116,13 @@ class Base(DriveBase):
         self.right_motor.hold()
     # def movedegByMe():
         
-    def syncAcc(self, distance_in_mm: float, acc=500, speedMin=150, speedMax=1000):
+    def syncAcc(self, distance_in_mm: float, acc=300, speedMin=150, speedMax=1000):
         # self.reset_angles()
         # if (distance_in_Mm < 0):
         #     speedMin = -speedMin
         #     speedMax = -speedMax
         self.stop()
-        # self.settings(straight_acceleration=acc)
+        self.settings(straight_acceleration=acc)
         self.straight(distance_in_mm)
         # AccTwoEnc.config(speedMin, speedMax, 250, 250, degrees)
         # SyncCtrl.config(0.012, 0, 400, 400)
