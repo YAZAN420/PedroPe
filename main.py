@@ -14,10 +14,13 @@ import time
 
 preflightChecks()
 reset()
+# downClaw()
+# take8Blocks()
+# make2buildRedAndYellow(1)
+resetDetectedColor()
 downClaw()
-take8Blocks()
-make2buildRedAndYellow(2)
-
+move_to_the_other_side()
+take4block()
 
 # testleaveblocksagain()
 finish()
