@@ -116,7 +116,7 @@ class Base(DriveBase):
         self.right_motor.hold()
     # def movedegByMe():
         
-    def syncAcc(self, distance_in_mm: float, acc=300, speedMin=150, speedMax=1000):
+    def syncAcc(self, distance_in_mm: float, acc=500, speedMin=150, speedMax=1000):
         # self.reset_angles()
         # if (distance_in_Mm < 0):
         #     speedMin = -speedMin
@@ -168,6 +168,12 @@ class Base(DriveBase):
         while (not function()):
             pass
         self.stop_and_hold()
+        
+    def move_until_method(self, function, speed=60):
+        self.start_tank(speed, speed)
+        while (not function()):
+            pass
+        self.stop_and_hold()
 
     def start_moving(self, speed: int):
         """
@@ -176,3 +182,4 @@ class Base(DriveBase):
         """
         self.start_tank(speed, speed)
         return
+   

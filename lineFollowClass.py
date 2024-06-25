@@ -74,19 +74,21 @@ class LineController:
         :param speed: The maximum speed of the robot -100% to 100%
         :return:(nothing)
         """
-        kp = 0.09
-        kd = 1
+        self.until_method(lambda: self.white_state() != 3)
+
+    def until_method(self, method, speed: float = 40):
+        kp = 0.13
+        kd = 0.3
         speed = abs(speed)
         pd, last_error, error = 0, 0, 0
         captured_angles = self.robotBase.capture_motor_angles()
-        while self.white_state() != 3:
+        while not method():
             error = (self.right_sensor.reflection() -
                      self.left_sensor.reflection())
             pd = (kp * error) + (kd * (error - last_error))
             self.robotBase.start_tank_dc(int(speed - pd), int(speed + pd))
             last_error = error
         self.robotBase.stop_and_hold()
-        return
 
     def correct(self, duration=0.75, speed=50):
         kp = 0.12
@@ -134,34 +136,6 @@ class LineController:
             # wait(15)
         self.robotBase.stop_and_hold()
         return
-
-    def turnUntilBlackleft(self, speed: int):
-        while self.black_state() != 2:
-            self.robotBase.left_motor.run(speed)
-            self.robotBase.right_motor.run(-speed)
-        self.left_motor.hold()
-        self.right_motor.hold()
-
-    def turnUntilBlackright(self, speed: int):
-        while self.black_state() != 1:
-            self.robotBase.left_motor.run(speed)
-            self.robotBase.right_motor.run(-speed)
-        self.robotBase.left_motor.hold()
-        self.robotBase.right_motor.hold()
-
-    def turnUntilBlackright1(self, speed: int):
-        while self.black_state() != 1:
-            self.robotBase.left_motor.run(-speed)
-            self.robotBase.right_motor.run(speed)
-        self.robotBase.left_motor.hold()
-        self.robotBase.right_motor.hold()
-
-    def turnUntilBlackleft1(self, speed: int):
-        while self.black_state() != 2:
-            self.robotBase.left_motor.run(-speed)
-            self.robotBase.right_motor.run(speed)
-        self.robotBase.left_motor.hold()
-        self.robotBase.right_motor.hold()
 
     def follow_cm(self, distance_cm: float, speed: int = -85):
         """

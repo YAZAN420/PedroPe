@@ -14,10 +14,14 @@ import time
 
 preflightChecks()
 reset()
-downClaw()
+downClaw(100)
+
+
+# down_motor.run_time(speed=-1000, time=1000)
+# while True:
+
+#     base.turn(100)
+#     wait(5000)
 take8Blocks()
-make2buildRedAndYellow(2)
-
-
-# testleaveblocksagain()
+make2buildRedAndYellow(1)
 finish()

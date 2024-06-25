@@ -6,42 +6,45 @@ def putBlockOnBlock():
     down_motor.run_time(400, 300*1.5, then=Stop.HOLD, wait=True)
     down_motor.run(600)
     up_motor.run_angle(speed=300, rotation_angle=60, then=Stop.HOLD, wait=True)
-    base.syncAcc(55)
+    base.syncAcc(55, 300)
     up_motor.run_time(-250, 300)
     down_motor.stop()
     down_motor.run_angle(speed=-1000, rotation_angle=150,
                          then=Stop.HOLD, wait=True)
 
 
+def see_white():
+    ref1 = left_sensor.reflection()
+    ref2 = right_sensor.reflection()
+    return ref1+ref2 > 170
+
+
 def take8Blocks():
     downClaw()
     left_motor.run_angle(speed=-400, rotation_angle=240)
     right_motor.run_angle(speed=-400, rotation_angle=270)
-    # base.stop()
     left_motor.run_time(speed=300, time=400)
     resetDetectedColor()
-    wait(100)
+    wait(300)
     moveUntilBlock(500)
     take4block()
     down_motor.run_time(440, 220*3, then=Stop.HOLD, wait=True)
-    # base.syncAcc(-470, 200)
-    base.syncAcc(-330)
-    base.syncAcc(100)
+    base.move_until_method(see_white, -400)
+    base.syncAcc(90, 200)
     base.turn(-110)
     base.syncAcc(-200, 200)
-    reset()
+    down_motor.run_angle(speed=-400, rotation_angle=60)
+    upClaw()
     base.syncAcc(920)
-    base.move_mm(40, 90)
-    wait(1000)
+    base.move_mm(40, 120)
+    # base.move_mm(20, -90)
     base.turn(90)
-    wait(1000)
+    reset()
     resetDetectedColor()
     downClaw()
-    wait(200)
+    base.move_mm(20, -200)
     base.move_sideway(200, -50, 0)
-    wait(200)
     moveUntilBlock(300)
-    wait(200)
     take4block()
 
 
@@ -59,10 +62,11 @@ def take4block():
 def putBlockOnBlockWithGood():
     putBlockOnBlock()
     up_motor.run_time(speed=-400, time=600, wait=False)
+    wait(200)
     make2BlocksGood()
 
 
-def resetDetectedColor(angle=200):
+def resetDetectedColor(angle=210):
     down_motor.run_angle(speed=-10000, rotation_angle=angle,
                          then=Stop.HOLD, wait=False)
 
@@ -92,12 +96,7 @@ def upClaw():
 
 
 def moveUntilBlock(speed):
-    base.start_tank(speed, speed)
-    while (True):
-        r, g, b = front_sensor.rgb()
-        if (r > 4):
-            break
-    base.stop_and_hold()
+    base.move_until_method(lambda: front_sensor.rgb()[0] > 4, speed)
 
 
 def reset():
@@ -112,19 +111,31 @@ def reset():
     ev3.speaker.beep()
 
 
+def see_black():
+    fir = left_sensor.reflection()
+    sec = right_sensor.reflection()
+    return fir+sec < 35
+
+
 def make2buildRedAndYellow(mode=2):
-    line.stop_at_white(50)
+    base.move_until_method(see_white, 400)
     base.syncAcc(-130 if mode == 1 else -320)
     base.turn(130)
     base.move_mm(300, -1000)
     base.stop_and_hold()
-    downClaw(100)
-    down_motor.run_time(-1000, 200, then=Stop.HOLD, wait=True)
-    line.stop_at_joint(70)
-    line.correct()
-    line.stop_at_white(70)
-    base.move_mm(100, 400)
-    base.turn(-90 if mode == 1 else 90)
+    downClaw()
+    down_motor.run_time(speed=-1000, time=200, wait=False)
+    base.move_until_method(see_black, speed=250)
+    wait(1000)
+
+    def see_yellow():
+        ref1 = left_sensor.reflection()
+        ref2 = right_sensor.reflection()
+        return ref1+ref2 > 150
+    line.until_method(see_yellow, speed=50)
+    base.move_mm(160, 300)
+    wait(600)
+    base.turn(-100 if mode == 1 else 100)
     base.move_mm(10, 400)
     leaveblocks()
 
@@ -149,10 +160,10 @@ def leaveblocks():
     down_motor.run_angle(speed=600, rotation_angle=8)
     up_motor.stop()
     up_motor.run_angle(speed=-300, rotation_angle=95)
-    base.syncAcc(-120)
+    base.syncAcc(-100)
     upClaw()
     base.syncAcc(-130)
-    wait(1000)
+    wait(300)
     # # yellow build
     downClaw()
     down_motor.run_time(speed=1000, time=420)

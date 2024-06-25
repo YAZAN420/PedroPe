@@ -2,15 +2,8 @@ from config import *
 from mainFunctions import *
 from tests import *
 
+
 class garbage:
-    @classmethod
-    def move_until_white(cls, sensor=front_sensor):
-        base.start_tank(70, 70)
-        while (True):
-            ref = sensor.reflection()
-            if (ref > 70):
-                break
-        base.stop_and_hold()
 
     @classmethod
     def reset_to_down_sen(cls):
@@ -64,13 +57,13 @@ class garbage:
         base.turn(77)
         upClaw()
         down_motor.stop()
-        base.syncMoveMm(90,1000)
+        base.syncMoveMm(90, 1000)
         down_motor.run_time(speed=10000, time=700, wait=False)
         up_motor.run_time(speed=-400, time=700, wait=False)
         base.syncAcc(300, acc=880)
         downClaw()
         down_motor.hold()
-        cls.move_until_white(left_sensor)
+        base.move_until_method(lambda: left_sensor.reflection() > 70, 70)
 
     @classmethod
     def run(cls):
@@ -89,4 +82,3 @@ class garbage:
         reset()
         base.syncAcc(-500)
         base.turn(45)
-        
