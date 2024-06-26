@@ -13,12 +13,17 @@ from AccOneEnc import *
 import time
 
 preflightChecks()
-# reset()
 down_motor.run_time(speed=1000,time=600,wait=False)
-downClaw(80)
+up_motor.run_time(speed=-1000,time=600,wait=False)
 take8Blocks()
 make2buildRedAndYellow(1)
+wait(3000)
+base.turn(60)
+downClaw()
+base.move_until_method(see_black, speed=300)
+base.move_mm(distance_in_mm=100, speed=300)
+base.turn(70)
+base.turn_until_method(lambda: right_sensor.reflection() < 15, speed=90)
+garbage.run()
+# testleaveblocksagain()
 finish()
-
-
-

@@ -13,24 +13,26 @@ class garbage:
 
     @classmethod
     def open_pipe1(cls):
-        downClaw()
         line.correct()
         line.stop_at_white()
-        base.move_mm(120, 300)
+        base.move_mm(100, 290)
         wait(200)
-        left_motor.run_angle(speed=500, rotation_angle=47)
+        left_motor.run_angle(speed=500, rotation_angle=35)
         wait(200)
-        up_motor.run_angle(speed=8000, rotation_angle=60, wait=False)
+        up_motor.run_angle(speed=8000, rotation_angle=90, wait=False)
         wait(200)
         down_motor.run_angle(speed=-1000, rotation_angle=260, wait=False)
-        base.move_mm(430, 300)
-        wait(200)
-        up_motor.run_angle(speed=-1000, rotation_angle=40)
-        wait(200)
-        left_motor.run_angle(speed=500, rotation_angle=12)
-        base.move_mm(23, 200)
-        down_motor.run_time(speed=-1000, time=200, wait=False)
-        upClaw()
+        base.move_mm(450, 300)
+        downClaw()
+        # wait(200)
+        # up_motor.run_angle(speed=-1000, rotation_angle=55)
+        # wait(200)
+        # up_motor.run_angle(speed=1000, rotation_angle=30)
+        # wait(200)
+        # left_motor.run_angle(speed=500, rotation_angle=12)
+        # base.move_mm(23, 200)
+        # down_motor.run_time(speed=-1000, time=200, wait=False)
+        # upClaw()
 
     @classmethod
     def open_pipe2(cls):
@@ -68,7 +70,6 @@ class garbage:
     @classmethod
     def run(cls):
         print("running garbage: ")
-        reset()
         cls.open_pipe1()
         cls.take_debris()
         base.syncAcc(130)
