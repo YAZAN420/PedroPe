@@ -38,8 +38,8 @@ def take8Blocks():
     base.syncAcc(920)
     base.move_mm(40, 120)
     # base.move_mm(20, -90)
-    base.turn(90)
     reset()
+    base.turn(90)
     resetDetectedColor()
     downClaw()
     base.move_mm(20, -200)
@@ -66,7 +66,7 @@ def putBlockOnBlockWithGood():
     make2BlocksGood()
 
 
-def resetDetectedColor(angle=210):
+def resetDetectedColor(angle=196):
     down_motor.run_angle(speed=-10000, rotation_angle=angle,
                          then=Stop.HOLD, wait=False)
 
@@ -135,7 +135,7 @@ def make2buildRedAndYellow(mode=2):
     line.until_method(see_yellow, speed=50)
     base.move_mm(160, 300)
     wait(600)
-    base.turn(-100 if mode == 1 else 100)
+    base.turn(-90 if mode == 1 else 100)
     base.move_mm(10, 400)
     leaveblocks()
 

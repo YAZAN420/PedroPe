@@ -15,6 +15,13 @@ def testUpMotor():
         ev3.speaker.beep()
         wait(3000)
 
+def testForTurn1Motor():
+    down_motor.run_time(speed=-1000, time=1000)
+    def see_yellow():
+            ref1 = left_sensor.reflection()
+            ref2 = right_sensor.reflection()
+            return ref1+ref2 > 150
+    line.until_method(see_yellow, speed=50)
 
 def grap():
     up_motor.run_until_stalled(-1000, then=Stop.HOLD)
