@@ -43,7 +43,7 @@ class garbage:
         up_motor.run_angle(speed=800, rotation_angle=20, wait=False)
         down_motor.run_angle(speed=-1000, rotation_angle=260, wait=False)
         wait(200)
-        base.syncAcc(520, acc=900)
+        base.syncAcc(600, acc=900)
         base.turn(-40)
         up_motor.run_time(speed=800, time=500, wait=False)
         base.syncAcc(350, 500)
