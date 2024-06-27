@@ -15,7 +15,7 @@ waitForButtonPress()
 preflightChecks()
 resetStart()
 take8Blocks()
-make2buildRedAndYellow(2)
+make2buildRedAndYellow(1)
 move_from_blocks_to_line()
 garbage.run()
 

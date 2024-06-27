@@ -48,7 +48,7 @@ def take8Blocks():
     base.turn(90)
     resetDetectedColor()
     downClaw()
-    base.move_mm(30, -200)
+    base.move_mm(35, -200)
     wait(200)
     base.move_sideway(165, -50, 0)
     moveUntilBlock(300)
@@ -167,7 +167,7 @@ def make2buildRedAndYellow(mode):
         return v > 20
     base.move_until_method(see_yellow_one, -400)
     wait(200)
-    base.syncAcc(205 if mode == 1 else 15)
+    base.syncAcc(220 if mode == 1 else 15)
     base.turn(110)
     base.move_mm(170, -300)
     base.stop_and_hold()
