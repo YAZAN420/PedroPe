@@ -205,7 +205,7 @@ def leaveblocks():
     base.syncAcc(365, 200)
     base.stop()
     # uninstall
-    up_motor.run_time(speed=-300, time=300)
+    up_motor.run_time(speed=-300, time=295)
     down_motor.run_angle(speed=-1000, rotation_angle=90)
     upClaw()
     base.syncAcc(-75)
