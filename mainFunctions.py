@@ -49,6 +49,7 @@ def take8Blocks():
     resetDetectedColor()
     downClaw()
     base.move_mm(20, -200)
+    wait(200)
     base.move_sideway(170, -50, 0)
     moveUntilBlock(300)
     take4block()
@@ -74,13 +75,13 @@ def move_from_blocks_to_line():
     wait(100)
     base.stop()
     base.settings(turn_acceleration=10000, turn_rate=800)
-    base.turn(60)
-    up_motor.run_time(speed=-500, time=500, wait=False)
+    base.turn(-90)
+    up_motor.run_time(speed=-500, time=700, wait=False)
     base.syncAcc(100, acc=1000)
     base.move_until_method(see_black, speed=300)
     base.move_mm(distance_in_mm=100, speed=400)
-    base.turn(90)
-    base.turn_until_method(lambda: right_sensor.reflection() < 15, speed=150)
+    base.turn(75)
+    base.turn_until_method(lambda: right_sensor.reflection() < 15, speed=120)
 
 
 def putBlockOnBlockWithGood():
@@ -144,7 +145,7 @@ def make2buildRedAndYellow(mode):
         return v > 20
     base.move_until_method(see_yellow_one, -400)
     wait(200)
-    base.syncAcc(183 if mode == 1 else 10)
+    base.syncAcc(205 if mode == 1 else 10)
     base.turn(110)
     base.move_mm(170, -300)
     base.stop_and_hold()

@@ -1,7 +1,7 @@
 from config import *
 from mainFunctions import *
 from tests import *
-
+from mainFunctions import *
 
 class garbage:
 
@@ -13,8 +13,8 @@ class garbage:
 
     @classmethod
     def open_pipe1(cls):
-        line.correct()
-        line.stop_at_white()
+        
+        line.until_method(see_white)
         base.move_mm(100, 290)
         wait(200)
         left_motor.run_angle(speed=500, rotation_angle=20)
