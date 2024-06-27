@@ -22,7 +22,7 @@ def see_white():
 def take8Blocks():
     downClaw()
     left_motor.run_angle(speed=-700, rotation_angle=240)
-    right_motor.run_angle(speed=-700, rotation_angle=240)
+    right_motor.run_angle(speed=-700, rotation_angle=250)
     # left_motor.run_time(speed=300, time=400)
     resetDetectedColor()
     wait(300)
@@ -36,7 +36,7 @@ def take8Blocks():
     base.turn(-110)
     # wait(6000)
     base.move_mm(170, -300)
-    down_motor.run_time(speed=10000, time=250)
+    down_motor.run_time(speed=10000, time=400)
     print("done")
     up_motor.run_time(speed=1000, time=800, wait=False)
     wait(500)
@@ -48,9 +48,9 @@ def take8Blocks():
     base.turn(90)
     resetDetectedColor()
     downClaw()
-    base.move_mm(20, -200)
+    base.move_mm(30, -200)
     wait(200)
-    base.move_sideway(170, -50, 0)
+    base.move_sideway(165, -50, 0)
     moveUntilBlock(300)
     take4block()
 
@@ -167,7 +167,7 @@ def make2buildRedAndYellow(mode):
         return v > 20
     base.move_until_method(see_yellow_one, -400)
     wait(200)
-    base.syncAcc(205 if mode == 1 else 10)
+    base.syncAcc(205 if mode == 1 else 15)
     base.turn(110)
     base.move_mm(170, -300)
     base.stop_and_hold()
