@@ -11,19 +11,11 @@ from mainFunctions import *
 from garbage import *
 from AccOneEnc import *
 import time
-
+waitForButtonPress()
 preflightChecks()
-down_motor.run_time(speed=1000,time=600,wait=False)
-up_motor.run_time(speed=-1000,time=600,wait=False)
+resetStart()
 take8Blocks()
 make2buildRedAndYellow(1)
-wait(3000)
-base.turn(60)
-downClaw()
-base.move_until_method(see_black, speed=300)
-base.move_mm(distance_in_mm=100, speed=300)
-base.turn(70)
-base.turn_until_method(lambda: right_sensor.reflection() < 15, speed=90)
+move_from_blocks_to_line()
 garbage.run()
-# testleaveblocksagain()
 finish()

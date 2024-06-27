@@ -1,12 +1,13 @@
 from pybricks.tools import wait,StopWatch # type: ignore
 from config import *
-
+from pybricks.tools import wait, StopWatch  # type: ignore
 def preflightChecks():
+    if(DEBUG): stopwatch.reset()
     voltage = ev3.battery.voltage()
     print("The voltage is :" , voltage) 
     if voltage < 8000:
-        ev3.speaker.beep(frequency=200, duration=1000)    
-        print("Low battery.")
+        if(DEBUG): ev3.speaker.beep(frequency=200, duration=1000)    
+        if(DEBUG): print("Low battery.")
         from sys import exit               
         exit()
     ev3.speaker.beep(frequency=600, duration=300)
@@ -33,7 +34,8 @@ def printCalibrateColor():
     
     
 def finish(infint : bool = False ):
-    print("finished!")
+    if(DEBUG): print(stopwatch.time()//1000)
+    if(DEBUG): print("finished!")
     wait(6000 if not infint  else 999999999)
     
 

@@ -1,6 +1,4 @@
 class SyncCtrl:
-    print("Sync")
-
     @classmethod
     def config(cls, kp: float, kd: float, speedB: float, speedC: float):
         cls.kp = kp

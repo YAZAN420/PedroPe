@@ -7,7 +7,7 @@ from gyroClass import GyroController
 from base import Base
 from ColorSen import ColorSen
 from lineFollowClass import LineController
-
+from constants import *
 
 ev3 = EV3Brick()
 left_motor = Motor(Port.C, positive_direction=Direction.COUNTERCLOCKWISE)
@@ -23,3 +23,4 @@ base = Base(left_motor=left_motor, right_motor=right_motor,
 base.settings(turn_rate=225, straight_speed=1000,
               straight_acceleration=250, turn_acceleration=250)
 line = LineController(base, left_sensor=left_sensor, right_sensor=right_sensor)
+if(DEBUG): stopwatch = StopWatch()

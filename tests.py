@@ -123,15 +123,15 @@ def testU():
     down_motor.run(500)
 
 
-def printValues():
+def printValues(sensor):
     while True:
         wait(200)
-        r, g, b = front_sensor.rgb()
-        h, s, v = front_sensor.hsv()
+        r, g, b = sensor.rgb()
+        h, s, v = sensor.hsv()
         wait(200)
-        ref = front_sensor.reflection()
+        ref = sensor.reflection()
         wait(200)
-        amp = front_sensor.ambient()
+        # amp = sensor.ambient()
         print(r)
         print(g)
         print(b)
@@ -139,7 +139,7 @@ def printValues():
         print(s)
         print(v)
         print(ref)
-        print(amp)
+        # print(amp)
         print("______________________________")
 
 
