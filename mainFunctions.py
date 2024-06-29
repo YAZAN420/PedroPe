@@ -55,6 +55,17 @@ def take8Blocks():
     take4block()
 
 
+def goToLineAfterHotam():
+    downClaw()
+    base.syncAcc(-350)
+    base.turn(100)
+    base.syncAcc(-300)
+    base.move_mm(160, 500)
+    base.turn(70)
+    base.turn_until_method(see_black, speed=300)
+    line.correct()
+
+
 def take4block():
     base.move_mm(150, 200)
     putBlockOnBlockWithGood()
@@ -166,6 +177,7 @@ def make2buildRedAndYellow(mode):
     def see_yellow_one():
         h, s, v = left_sensor.hsv()
         return v > 20
+
     def see_yellow():
         ref1 = left_sensor.reflection()
         ref2 = right_sensor.reflection()
@@ -201,7 +213,7 @@ def leaveblocks():
     base.syncAcc(365, 200)
     base.stop()
     # uninstall
-    up_motor.run_time(speed=-300, time=285)
+    up_motor.run_time(speed=-300, time=278)
     down_motor.run_angle(speed=-1000, rotation_angle=90)
     upClaw()
     base.syncAcc(-75)

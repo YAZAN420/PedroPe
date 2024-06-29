@@ -38,7 +38,7 @@ class garbage:
     def open_pipe2(cls):
         downClaw()
         line.correct()
-        line.follow_cm(35)
+        line.follow_cm(37)
         line.stop_at_white()
         up_motor.run_angle(speed=800, rotation_angle=20, wait=False)
         down_motor.run_angle(speed=-1000, rotation_angle=260, wait=False)
