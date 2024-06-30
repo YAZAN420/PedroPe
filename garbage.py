@@ -45,7 +45,7 @@ class garbage:
         wait(200)
         base.turn(-14)
         up_motor.run_time(speed=800, time=500, wait=False)
-        base.syncAcc(900, acc=900)
+        base.syncAcc(850, acc=900)
         # wait(200)
         # base.move_sideway(160, 30, 1)
         # wait(200)
