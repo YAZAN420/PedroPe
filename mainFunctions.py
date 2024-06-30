@@ -6,25 +6,28 @@ def putBlockOnBlock():
     down_motor.run_time(400, 300*1.5, then=Stop.HOLD, wait=True)
     down_motor.run(600)
     up_motor.run_angle(speed=300, rotation_angle=60, then=Stop.HOLD, wait=True)
-    base.syncAcc(51, 600)
+    base.syncAcc(50, 600)
     up_motor.run_time(-250, 300)
     down_motor.stop()
     down_motor.run_angle(speed=-1000, rotation_angle=150,
                          then=Stop.HOLD, wait=True)
 
+
 def see_yellow_big():
-        ref1 = left_sensor.reflection()
-        ref2 = right_sensor.reflection()
-        return ref1+ref2 > 175
+    ref1 = left_sensor.reflection()
+    ref2 = right_sensor.reflection()
+    return ref1+ref2 > 175
+
 
 def see_white():
     ref1 = left_sensor.reflection()
     ref2 = right_sensor.reflection()
     return ref1+ref2 > 170
 
+
 def see_yellow_small():
-        h, s, v = left_sensor.hsv()
-        return v > 20
+    h, s, v = left_sensor.hsv()
+    return v > 20
 
 
 def take8Blocks():
@@ -34,7 +37,7 @@ def take8Blocks():
     right_motor.run_angle(speed=-700, rotation_angle=260)
     wait(200)
     resetDetectedColor()
-    wait(300)
+    wait(200)
     moveUntilBlock(500)
     take4block()
     base.move_until_method(see_white, -400)
@@ -45,7 +48,7 @@ def take8Blocks():
     down_motor.run_time(speed=10000, time=400)
     print("done")
     up_motor.run_time(speed=1000, time=800, wait=False)
-    wait(500)
+    wait(500)  # do not change to be fast
     base.syncAcc(920, 250)
     upClaw()
     base.move_mm(40, 120)
@@ -53,29 +56,32 @@ def take8Blocks():
     base.turn(90)
     resetDetectedColor()
     downClaw()
-    base.move_mm(35, -200)
+    base.move_mm(40, -200)
     wait(200)
     base.move_sideway(180, -50, 0)
-    moveUntilBlock(300)
+    moveUntilBlock(400)
     take4block()
 
 
 def goToFirstSafahAfterHotam():
+    base.syncAcc(-400)
     base.stop()
-    down_motor.run_time(speed=1000,time=700,wait=False)
-    right_motor.run_time(speed=-300,time=400)
-    base.syncAcc(-500)
+    down_motor.run_time(speed=1000, time=700, wait=False)
+    right_motor.run_time(speed=-300, time=400)
+    base.syncAcc(-400)
+
 
 def goToLineAfterSafah():
     downClaw()
-    base.move_until_method(see_yellow_small,speed=-300)
+    # base.move_until_method(see_yellow_small,speed=-300)
     base.syncAcc(140)
     base.turn(70)
     base.move_mm(20, 300)
-    down_motor.run_time(speed=-400,time=300)
+    down_motor.run_time(speed=-400, time=300)
     base.turn_until_method(lambda: front_sensor.reflection() < 15, speed=100)
     line.correct(duration=0.35)
     line.until_method(see_yellow_big, speed=50)
+
 
 def take4block():
     base.move_mm(150, 200)
@@ -112,20 +118,23 @@ def move_from_blocks_to_line():
     down_motor.run_angle(speed=-1000, rotation_angle=160, wait=False)
     wait(100)
     base.turn(100)
+    up_motor.run_time(speed=1000, time=500, wait=False)
     wait(200)
-    base.syncAcc(295)
-    wait(100)
+    base.syncAcc(275)
     down_motor.run_time(speed=1000, time=400, wait=False)
+    up_motor.run_time(speed=-1000, time=700, wait=True)
+    base.stop()
+    left_motor.run_time(speed=400, time=200)
     base.move_until_method(see_black, 200)
     base.syncAcc(100)
     wait(100)
-    base.turn(80)
+    base.turn(70)
     wait(100)
     base.turn_until_method(lambda: left_sensor.reflection() > 80, speed=100)
     base.turn_until_method(lambda: left_sensor.reflection() < 30, speed=100)
     line.correct()
     down_motor.run_time(speed=-1000, time=400, wait=False)
-    line.follow_cm(30)
+    line.follow_cm(32)
 
 
 def putBlockOnBlockWithGood():
@@ -208,13 +217,13 @@ def leaveblocks():
     upClaw()
     base.syncAcc(-190)
     downClaw()
-    down_motor.run_time(speed=1000, time=420)
+    down_motor.run_time(speed=1000, time=450)
     base.syncAcc(-45)
     up_motor.run_angle(speed=300, rotation_angle=90)
     base.syncAcc(360, 200)
     base.stop()
     # uninstall
-    up_motor.run_time(speed=-300, time=270)
+    up_motor.run_time(speed=-300, time=260)
     down_motor.run_angle(speed=-1000, rotation_angle=90)
     upClaw()
     base.syncAcc(-78)
@@ -228,7 +237,7 @@ def leaveblocks():
     # # yellow build
     down_motor.run_angle(speed=-1000, rotation_angle=20, wait=False)
     downClaw()
-    down_motor.run_time(speed=1000, time=420)
+    down_motor.run_time(speed=1000, time=450)
     base.syncAcc(-50)
     up_motor.run_angle(speed=300, rotation_angle=120)
     base.syncAcc(115)

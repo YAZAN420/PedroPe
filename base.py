@@ -156,11 +156,11 @@ class Base(DriveBase):
     def move_sideway(self, degrees, speed, right):
         if (right):
             self.acc_one_motor(self.left_motor, degrees, speed)
-            wait(300)
+            wait(200)
             self.acc_one_motor(self.right_motor, degrees, speed)
         else:
             self.acc_one_motor(self.right_motor, degrees, speed)
-            wait(300)
+            wait(200)
             self.acc_one_motor(self.left_motor, degrees, speed)
 
     def turn_until_method(self, function, speed=60):
