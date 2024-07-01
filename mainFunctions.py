@@ -16,13 +16,13 @@ def putBlockOnBlock():
 def see_yellow_big():
     ref1 = left_sensor.reflection()
     ref2 = right_sensor.reflection()
-    return ref1+ref2 > 175
+    return ref1+ref2 > 130
 
 
 def see_white():
     ref1 = left_sensor.reflection()
     ref2 = right_sensor.reflection()
-    return ref1+ref2 > 170
+    return ref1+ref2 > 130
 
 
 def see_yellow_small():
@@ -46,7 +46,6 @@ def take8Blocks():
     base.turn(-110)
     base.move_mm(170, -300)
     down_motor.run_time(speed=10000, time=400)
-    print("done")
     up_motor.run_time(speed=1000, time=800, wait=False)
     wait(500)  # do not change to be fast
     base.syncAcc(920, 250)
@@ -203,7 +202,7 @@ def make2buildRedAndYellow(mode):
     line.until_method(see_yellow_big, speed=50)
     base.move_mm(140, 300)
     wait(200)
-    base.turn(94 * (-1 if mode == 1 else 1))
+    base.turn(95 * (-1 if mode == 1 else 1))
     base.move_mm(10, 400)
     leaveblocks()
 
@@ -220,13 +219,13 @@ def leaveblocks():
     down_motor.run_time(speed=1000, time=450)
     base.syncAcc(-45)
     up_motor.run_angle(speed=300, rotation_angle=90)
-    base.syncAcc(360, 200)
+    base.syncAcc(360, 190)
     base.stop()
     # uninstall
     up_motor.run_time(speed=-300, time=260)
     down_motor.run_angle(speed=-1000, rotation_angle=90)
     upClaw()
-    base.syncAcc(-78)
+    base.syncAcc(-80)
     down_motor.run_angle(speed=600, rotation_angle=8)
     up_motor.stop()
     up_motor.run_time(speed=-400, time=800)
@@ -240,7 +239,7 @@ def leaveblocks():
     down_motor.run_time(speed=1000, time=450)
     base.syncAcc(-50)
     up_motor.run_angle(speed=300, rotation_angle=120)
-    base.syncAcc(115)
+    base.syncAcc(124)
     up_motor.run_time(-250, 400)
     down_motor.run_angle(speed=-1000, rotation_angle=100)
     base.syncAcc(-200)
