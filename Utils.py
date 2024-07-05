@@ -22,7 +22,6 @@ def waitForButtonPress():
     print("Waiting for the button:")
     while not ev3.buttons.pressed():
         wait(10)
-
     while ev3.buttons.pressed():
         wait(10)
     wait(500)
