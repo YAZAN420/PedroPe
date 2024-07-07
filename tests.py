@@ -75,6 +75,23 @@ def correctTest():
         waitForButtonPress()
         line.correct()
 
+def test_for_steering():
+    while True:
+        waitForButtonPress()
+        downClaw()
+        base.move_until_method(see_black, 1000)
+        base.syncAcc(100)
+        upClaw()
+        base.stop()
+        move_steering(380, 40)
+        wait(2000)
+        resetDetectedColor(angle=170)
+        wait(5000)
+        downClaw()
+        wait(5000)
+        wait(200)
+        base.move_until_method(see_yellow_small, speed=300)
+        take4block()
 
 def testleaveblocksagain():
     downClaw()

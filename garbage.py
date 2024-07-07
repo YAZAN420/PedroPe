@@ -9,7 +9,7 @@ class garbage:
     def reset_to_down_sen(cls):
         downClaw()
         down_motor.run_angle(speed=-1000, rotation_angle=245)
-        # printValues()
+
 
     @classmethod
     def open_pipe1(cls):
@@ -27,15 +27,7 @@ class garbage:
         base.move_mm(50, 400)
         upClaw()
         downClaw()
-        # wait(200)
-        # up_motor.run_angle(speed=-1000, rotation_angle=55)
-        # wait(200)
-        # up_motor.run_angle(speed=1000, rotation_angle=30)
-        # wait(200)
-        # left_motor.run_angle(speed=500, rotation_angle=12)
-        # base.move_mm(23, 200)
-        # down_motor.run_time(speed=-1000, time=200, wait=False)
-        # upClaw()
+    
 
     @classmethod
     def open_pipe2(cls):
@@ -47,14 +39,8 @@ class garbage:
         wait(100)
         base.turn(-14)
         up_motor.run_time(speed=800, time=500, wait=False)
-        base.syncAcc(750, acc=900)
-        # wait(200)
-        # base.move_sideway(160, 30, 1)
-        # wait(200)
-        # base.syncAcc(60, acc=900)
-        # wait(2000)
-        # down_motor.run_time(speed=-1000, time=200, wait=False)
-        # upClaw()
+        base.syncAcc(650, acc=900)
+
 
     @classmethod
     def take_debris(cls):
@@ -81,8 +67,3 @@ class garbage:
         base.turn_until_method(lambda: left_sensor.reflection() < 30,speed=100)
         cls.open_pipe2()
         
-        # base.turn(-45)
-        # base.syncAcc(250)
-        # reset()
-        # base.syncAcc(-500)
-        # base.turn(45)
