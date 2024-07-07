@@ -31,16 +31,16 @@ def see_yellow_small():
 
 
 def take8Blocks():
-    downClaw()
     left_motor.run_angle(speed=-700, rotation_angle=230)
-    wait(200)
+    wait(100)
     right_motor.run_angle(speed=-700, rotation_angle=260)
-    wait(200)
+    wait(100)
     resetDetectedColor()
-    wait(200)
+    wait(100)
     moveUntilBlock(500)
     take4block()
-    base.move_until_method(see_white, -400)
+    base.move_until_method(see_white, -300)
+    base.syncAcc(-60)
     wait(100)
     base.syncAcc(90, 200)
     base.turn(-110)
@@ -86,11 +86,13 @@ def take4block():
     base.move_mm(150, 200)
     putBlockOnBlockWithGood()
     down_motor.run_time(1000, 220*1.5, then=Stop.HOLD, wait=True)
-    upClaw()
+    up_motor.run_angle(speed=1000, rotation_angle=90, wait=False)
+    wait(125)
     base.syncAcc(100)
     downClaw()
     base.move_mm(85, 200)
-    putBlockOnBlockWithGood()
+    putBlockOnBlockWithGood(False)
+    wait(130)
 
 
 def resetStart():
@@ -116,7 +118,7 @@ def move_from_blocks_to_line():
     base.syncAcc(225)
     down_motor.run_angle(speed=-1000, rotation_angle=160, wait=False)
     wait(100)
-    base.turn(100)
+    base.turn(90)
     up_motor.run_time(speed=1000, time=500, wait=False)
     wait(200)
     base.syncAcc(275)
@@ -136,11 +138,11 @@ def move_from_blocks_to_line():
     line.follow_cm(32)
 
 
-def putBlockOnBlockWithGood():
+def putBlockOnBlockWithGood(lastWait=True):
     putBlockOnBlock()
     up_motor.run_time(speed=-400, time=600, wait=False)
-    wait(200)
-    make2BlocksGood()
+    wait(100)
+    make2BlocksGood(lastWait)
 
 
 def resetDetectedColor(angle=191):
@@ -148,10 +150,10 @@ def resetDetectedColor(angle=191):
                          then=Stop.HOLD, wait=False)
 
 
-def make2BlocksGood():
-    down_motor.run_time(1000, 300*1.5)
+def make2BlocksGood(lastWait):
+    down_motor.run_time(1000, 300*1.5, wait=False)
     base.syncAcc(-35)
-    down_motor.run_time(-1000, 220*3)
+    down_motor.run_time(-1000, 220*3, wait=lastWait)
 
 
 def akbs():
@@ -183,6 +185,14 @@ def reset():
     wait(200)
     down_motor.hold()
     up_motor.hold()
+
+
+def upMotorResetWithTrueOrFalse(speed=1000, bool=True):
+    up_motor.run_time(speed=speed, time=700, wait=bool)
+
+
+def downMotorResetTrueOrFalse(speed=1000, bool=True):
+    down_motor.run_time(speed=speed, time=700, wait=bool)
 
 
 def see_black():
@@ -239,7 +249,7 @@ def leaveblocks():
     down_motor.run_time(speed=1000, time=450)
     base.syncAcc(-50)
     up_motor.run_angle(speed=300, rotation_angle=120)
-    base.syncAcc(124)
+    base.syncAcc(115)
     up_motor.run_time(-250, 400)
     down_motor.run_angle(speed=-1000, rotation_angle=100)
     base.syncAcc(-200)

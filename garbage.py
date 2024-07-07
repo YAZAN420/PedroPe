@@ -18,7 +18,7 @@ class garbage:
         print("done")
         base.move_mm(100, 400)
         wait(200)
-        left_motor.run_angle(speed=500, rotation_angle=21)
+        left_motor.run_angle(speed=500, rotation_angle=18)
         up_motor.run_angle(speed=8000, rotation_angle=80, wait=False)
         down_motor.run_angle(speed=-1000, rotation_angle=260, wait=False)
         base.move_mm(450, 400)
@@ -39,7 +39,6 @@ class garbage:
 
     @classmethod
     def open_pipe2(cls):
-        downClaw()
         line.correct()
         line.follow_cm(37)
         line.until_method(see_white,speed=40)
@@ -61,7 +60,7 @@ class garbage:
     def take_debris(cls):
         downClaw()
         base.syncAcc(-390, 500)
-        base.turn(77)
+        base.turn(70)
         upClaw()
         down_motor.stop()
         base.syncMoveMm(90, 1000)
