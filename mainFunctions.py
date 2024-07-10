@@ -29,6 +29,9 @@ def see_yellow_small():
     h, s, v = left_sensor.hsv()
     return v > 20
 
+def see_yellow_small2():
+    h, s, v = right_sensor.hsv()
+    return v > 20
 
 def take8Blocks():
     left_motor.run_angle(speed=-700, rotation_angle=230)
