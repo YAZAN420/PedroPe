@@ -114,29 +114,18 @@ class Base(DriveBase):
             done = (abs(el)+abs(er))/2 >= distance_in_degrees
         self.left_motor.hold()
         self.right_motor.hold()
-    # def movedegByMe():
-        
-    def syncAcc(self, distance_in_mm: float, acc=500, speedMin=150, speedMax=1000):
-        # self.reset_angles()
-        # if (distance_in_Mm < 0):
-        #     speedMin = -speedMin
-        #     speedMax = -speedMax
+   
+
+    def turn(self, angle, acc=600):
+        self.stop()
+        self.settings(turn_acceleration=acc)
+        super().turn(angle)
+
+    def sync_acc(self, distance_in_mm: float, acc=500, speedMin=150, speedMax=1000):
         self.stop()
         self.settings(straight_acceleration=acc)
         self.straight(distance_in_mm)
-        # AccTwoEnc.config(speedMin, speedMax, 250, 250, degrees)
-        # SyncCtrl.config(0.012, 0, 400, 400)
-        # done = False
-        # while not done:
-        #     el = self.left_motor.angle()
-        #     er = self.right_motor.angle()
-        #     power, done = AccTwoEnc.calculate(el, er)
-        #     powerB, powerC = SyncCtrl.calculateWithSpeed(el, er, power, power)
-        #     self.left_motor.run(powerB)
-        #     self.right_motor.run(powerC)
-        # self.left_motor.hold()
-        # self.right_motor.hold()
-
+    
     def acc_one_motor(self, motor, degrees, speed=100):
         self.stop()
         motor.reset_angle(0)
@@ -168,7 +157,7 @@ class Base(DriveBase):
         while (not function()):
             pass
         self.stop_and_hold()
-        
+
     def move_until_method(self, function, speed=60):
         self.start_tank(speed, speed)
         while (not function()):
@@ -182,4 +171,3 @@ class Base(DriveBase):
         """
         self.start_tank(speed, speed)
         return
-   

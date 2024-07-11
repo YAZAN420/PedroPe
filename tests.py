@@ -15,13 +15,16 @@ def testUpMotor():
         ev3.speaker.beep()
         wait(3000)
 
+
 def testForTurn1Motor():
     down_motor.run_time(speed=-1000, time=1000)
+
     def see_yellow():
-            ref1 = left_sensor.reflection()
-            ref2 = right_sensor.reflection()
-            return ref1+ref2 > 150
+        ref1 = left_sensor.reflection()
+        ref2 = right_sensor.reflection()
+        return ref1+ref2 > 150
     line.until_method(see_yellow, speed=50)
+
 
 def grap():
     up_motor.run_until_stalled(-1000, then=Stop.HOLD)
@@ -75,12 +78,13 @@ def correctTest():
         waitForButtonPress()
         line.correct()
 
+
 def test_for_steering():
     while True:
         waitForButtonPress()
         downClaw()
         base.move_until_method(see_black, 1000)
-        base.syncAcc(100)
+        base.sync_acc(100)
         upClaw()
         base.stop()
         move_steering(380, 40)
@@ -92,6 +96,7 @@ def test_for_steering():
         wait(200)
         base.move_until_method(see_yellow_small, speed=300)
         take4block()
+
 
 def testleaveblocksagain():
     downClaw()
@@ -208,8 +213,8 @@ def syncAccTest():
 
 def syncAccTest2():
     while True:
-        base.syncAcc(500)
-        base.syncAcc(-500)
+        base.sync_acc(500)
+        base.sync_acc(-500)
 
 
 def syncAccTest3():
@@ -368,27 +373,27 @@ def testForSortingRYYR():
     down_motor.run_angle(speed=1000, rotation_angle=140, wait=True)
     # base.move_mm(150,-100)
     upClaw()
-    base.syncAcc(-200, 100)
+    base.sync_acc(-200, 100)
     downClaw()
     down_motor.run_time(1000, 300*1.5)
-    base.syncAcc(-60, 100)
+    base.sync_acc(-60, 100)
     upClaw()
-    base.syncAcc(300, 100)
+    base.sync_acc(300, 100)
     wait(4000)
     print("1")
     up_motor.run_angle(speed=-1000, rotation_angle=80, wait=True)
     print("2")
     down_motor.run_angle(speed=-1000, rotation_angle=100)
     print("3")
-    base.syncAcc(-15, 100)
+    base.sync_acc(-15, 100)
     print("4")
     up_motor.run_angle(speed=-1000, rotation_angle=25, wait=True)
     print("5")
-    base.syncAcc(-120, 100)
+    base.sync_acc(-120, 100)
     print("6")
     upClaw()
     print("7")
-    base.syncAcc(-180, 100)
+    base.sync_acc(-180, 100)
     print("8")
     downClaw()
     print("9")
@@ -403,12 +408,12 @@ def testagainforput4():
     down_motor.run_angle(speed=1000, rotation_angle=140, wait=True)
     # upClaw()
     up_motor.run_until_stalled(400, then=Stop.HOLD, duty_limit=70)
-    base.syncAcc(-210, 100)
+    base.sync_acc(-210, 100)
     downClaw()
     down_motor.run_time(1000, 300*1.5)
-    base.syncAcc(-50, 100)
+    base.sync_acc(-50, 100)
     upClaw()
-    base.syncAcc(270, 100)
+    base.sync_acc(270, 100)
     # base.move_mm(270,100)
     up_motor.run_angle(speed=-1000, rotation_angle=90, wait=True)
     # base.turn(5)
