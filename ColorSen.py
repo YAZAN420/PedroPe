@@ -33,7 +33,7 @@ class ColorSen(ColorSensor):
         ref *= 100/(WHITE-BLACK)
         return ref
     def rawRef(self):
-        return super.reflection()
+        return super().reflection()
     def hsv(self):
         return rgb_to_hsv(self.rgb())
     

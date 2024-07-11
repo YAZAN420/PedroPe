@@ -3,13 +3,6 @@ from mainFunctions import *
 from tests import *
 from mainFunctions import *
 
-
-def see_white():
-    ref1 = left_sensor.reflection()
-    ref2 = right_sensor.reflection()
-    return ref1+ref2 > 130
-
-
 def downClaw(duty=70):
     up_motor.run_until_stalled(-6000, then=Stop.HOLD, duty_limit=duty)
 

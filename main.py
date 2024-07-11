@@ -12,10 +12,14 @@ from garbage import *
 from AccOneEnc import *
 import time
 mode = 2
-waitForButtonPress()
+# waitForButtonPress()
 preflightChecks()
-resetStart()
-take8Blocks()
-make2buildRedAndYellow(mode)
-from_blocks_to_hotam_four(mode)
+# resetStart()
+# take8Blocks()
+# make2buildRedAndYellow(mode)
+# from_blocks_to_hotam_four(mode)
+
+
+
+
 finish()

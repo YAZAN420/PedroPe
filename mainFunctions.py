@@ -22,11 +22,37 @@ def see_yellow_big():
     return ref1+ref2 > 130
 
 
+def close_pipe2():
+    reset()
+    down_motor.run_angle(speed=-1000, rotation_angle=250, wait=True)
+    downClaw()
+    base.move_until_method(see_white_front, speed=400)
+    base.move_mm(30,400)
+    up_motor.run_time(speed=1000, time=100, wait=True)
+    down_motor.run_angle(speed=1000, rotation_angle=100, wait=True)
+    up_motor.run_time(speed=1000, time=800, wait=True)
+
+
+def close_pipe1():
+    reset()
+    downClaw()
+    down_motor.run_angle(speed=-1000, rotation_angle=120, wait=True)
+    base.syncAcc(40)
+    up_motor.run_time(speed=1000, time=800, wait=True)
+    down_motor.run_time(speed=-1000, time=600, wait=True)
+    base.move_mm(40,330)
+    reset()
+    base.move_mm(40,330)
+
+
 def see_white():
     ref1 = left_sensor.reflection()
     ref2 = right_sensor.reflection()
     return ref1+ref2 > 130
 
+def see_white_front():
+    ref1 = front_sensor.reflection()
+    return ref1>90
 
 def see_yellow_small():
     h, s, v = left_sensor.hsv()

@@ -1,5 +1,5 @@
-WHITE = 80
-BLACK = 11
+WHITE = 61
+BLACK = 6.5
 KP = 0.1
 KD = 0.5
 DEBUG = 1
