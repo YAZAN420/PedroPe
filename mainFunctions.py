@@ -165,10 +165,8 @@ def from_blocks_to_hotam_four(mode):
     base.sync_acc(440)
     openpipfun()
     base.turn(-30)
-    wait(4000)
     upMotorResetWithTrueOrFalse(-1000)
-    wait(4000)
-    base.turn(-110)
+    base.turn(-90)
     base.sync_acc(250)
 
 
