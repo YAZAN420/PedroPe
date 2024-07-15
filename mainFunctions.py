@@ -1,20 +1,29 @@
 from garbage import run
 from config import *
 from Utils import *
+from garbage import *
 
 
 def see_black():
     fir = left_sensor.reflection()
     sec = right_sensor.reflection()
-    return fir+sec < 20
+    return fir+sec < 30
+
+
+def see_blue_right():
+    h, s, v = right_sensor.hsv()
+    return h > 170
+
 
 def see_black_front():
     sec = front_sensor.reflection()
     return sec < 20
 
+
 def see_red():
     ref2 = front_sensor.color()
-    return  ref2==Color.RED
+    return ref2 == Color.RED
+
 
 def see_white():
     ref1 = left_sensor.reflection()
@@ -43,6 +52,24 @@ def see_yellow_small2():
     return v > 20
 
 
+def open_pipe1():
+    line.until_method(see_white, speed=40)
+    wait(200)
+    base.sync_acc(100)
+    wait(100)
+    base.turn(9)
+    # up_motor.run_angle(speed=8000, rotation_angle=80, wait=False)
+    down_motor.run_angle(speed=-1000, rotation_angle=200, wait=False)
+    # base.sync_acc(505)
+    base.sync_acc(420)
+    down_motor.run_time(speed=1000, time=1000, wait=False)
+    wait(200)
+    base.sync_acc(80)
+    openpipfun()
+    # base.move_mm(50, -400)
+    # up_motor.stop()
+
+
 def putBlockOnBlock():
     down_motor.run_time(400, 300*1.5, then=Stop.HOLD, wait=True)
     down_motor.run(600)
@@ -59,6 +86,7 @@ def putBlockOnBlock():
 
 def make2BlocksGood(lastWait):
     down_motor.run_time(1000, 300*1.5, wait=False)
+    wait(80)
     base.sync_acc(-35, 1000)
     down_motor.run_time(-1000, 220*3, wait=lastWait)
 
@@ -82,7 +110,7 @@ def take8Blocks():
     base.move_mm(300, -400)
     base.move_until_method(see_white, -250)
     wait(100)
-    base.sync_acc(60, 250)
+    base.sync_acc(90, 250)
     base.turn(-110)
     base.move_mm(170, -1000)
     down_motor.run_time(speed=10000, time=400, wait=False)
@@ -96,7 +124,7 @@ def take8Blocks():
     wait(200)
     resetDetectedColor(angle=195)
     downClaw()
-    take4block(140)
+    take4block(90)
 
 
 def take4block(dis=130):
@@ -109,7 +137,7 @@ def take4block(dis=130):
     downClaw()
     base.move_mm(65, 400)
     putBlockOnBlockWithGood(False)
-    wait(190)
+    wait(210)
 
 
 def make2buildRedAndYellow(mode):
@@ -124,9 +152,9 @@ def make2buildRedAndYellow(mode):
     base.move_mm(150, 300)
     wait(200)
     # base.turn(95 * (-1 if mode == 1 else 1))
-    base.turn(20 * (-1 if mode == 1 else 1))
-    base.turn_until_method(see_black_front,200*(-1 if mode == 1 else 1))
-    base.turn_until_method(see_red,200*(-1 if mode == 1 else 1))
+    base.turn(30 * (-1 if mode == 1 else 1))
+    base.turn_until_method(see_black_front, 250*(-1 if mode == 1 else 1))
+    base.turn_until_method(see_red, 250*(-1 if mode == 1 else 1))
     base.turn(7 * (-1 if mode == 1 else 1))
     base.move_mm(10, 400)
     leaveblocks()
@@ -170,38 +198,50 @@ def leaveblocks():
     base.sync_acc(-150)
 
 
-
 def from_blocks_to_hotam_four(mode):
-    # downClaw()
-    # base.turn(50)
-    # base.move_mm(30, 500)
-    # base.move_until_method(see_black, 400)
-    # base.move_mm(50, 800)
-    # base.turn(120)
-    # base.turn_until_method(lambda: right_sensor.reflection() < 7, 100)
-    # wait(200)
-    # run()
-    # base.turn(140)
-    # base.sync_acc(200)
-    # base.move_until_method(see_yellow_small2, 400)
-    # wait(100)
-    # resetDetectedColor(170)
-    if (mode == 1):
-        # base.sync_acc(250)
-        base.turn(-100)
-        up_motor.run_angle(rotation_angle=50, speed=550)
-        base.turn(110)
-        downClaw()
-        base.sync_acc(260)
-    else:
-        base.sync_acc(250)
+    downClaw()
+    base.turn(50)
+    base.move_mm(30, 600)
+    base.move_until_method(see_black, 600)
+    base.move_mm(30, 600)
+    base.turn(100, 900)
+    base.turn_until_method(lambda: right_sensor.reflection() < 7, 200)
+    wait(100)
+    open_pipe1()
+    base.sync_acc(-30)
+    up_motor.run_time(speed=-500, time=1000, wait=False)
+    wait(470)
     downMotorResetTrueOrFalse(1000)
-    upClaw()
+    base.sync_acc(-200)
+    down_motor.run_angle(rotation_angle=-220, speed=1000, wait=False)
+    base.sync_acc(30)
+    downMotorResetTrueOrFalse(1000, False)
+    base.sync_acc(-240)
+    up_motor.run_angle(rotation_angle=60, speed=1000)
+    base.turn(80)
+    down_motor.run_angle(rotation_angle=120, speed=-1000)
+    base.sync_acc(250)
+    upMotorResetWithTrueOrFalse(-1000, False)
+    wait(100)
+    base.move_mm(600, -600)
+    down_motor.run_angle(rotation_angle=-50, speed=550, wait=False)
+    base.turn(150)
+    base.move_until_method(see_blue_right, speed=400)
+    if (mode == 1):
+        base.turn(-100, 700)
+        up_motor.run_angle(rotation_angle=50, speed=550)
+        base.turn(105, 700)
+        downClaw()
+        base.sync_acc(360)
+    else:
+        base.sync_acc(360)
+    downMotorResetTrueOrFalse(1000)
+    up_motor.run_angle(rotation_angle=75, speed=1000, wait=False)
     base.sync_acc(-5)
     base.turn(-85)
-    base.move_mm(200, -1000)
     up_motor.stop()
-    up_motor.run_angle(rotation_angle=100, speed=-550, wait=True)
+    # up_motor.run_angle(rotation_angle=100, speed=-550, wait=False)
+    base.move_mm(200, -1000)
     down_motor.run_time(speed=-400, time=300, wait=True)
     down_motor.run_time(speed=-1000, time=300)
     base.sync_acc(200)
@@ -210,21 +250,22 @@ def from_blocks_to_hotam_four(mode):
     base.move_until_method(see_white, 300)
     downMotorResetTrueOrFalse(1000, False)
     base.sync_acc(120)
-    base.turn(94)
+    base.turn(90)
     base.sync_acc(440)
     openpipfun()
-    base.turn(-30)
-    upMotorResetWithTrueOrFalse(-1000)
+    up_motor.run_time(speed=-500, time=1200)
     base.turn(-90)
-    base.sync_acc(250)
+    upClaw()
+    base.sync_acc(150)
 
 
 def openpipfun():
-    down_motor.run_time(speed=-500, time=450, wait=True)
+    # down_motor.run_time(speed=-500, time=450, wait=True)
+    down_motor.run_until_stalled(-1000, duty_limit=25)
     up_motor.run_angle(speed=1000, rotation_angle=200, wait=False)
     base.stop()
     left_motor.run_angle(rotation_angle=40, speed=1000)
-    base.move_mm(20, 400)
+    # base.move_mm(20, 400)
 
 
 def move_steering(angle, steering, speed=1000):
@@ -246,6 +287,7 @@ def moveUntilBlock(speed):
 def resetDetectedColor(angle=191):
     down_motor.run_angle(speed=-10000, rotation_angle=angle,
                          then=Stop.HOLD, wait=False)
+
 
 def resetStart():
     down_motor.run_time(speed=1000, time=600, wait=False)
@@ -299,6 +341,7 @@ def close_pipe1():
     reset()
     base.move_mm(40, 330)
 
+
 def move_from_blocks_to_line():
     wait(100)
     base.stop()
@@ -335,4 +378,3 @@ def move_from_blocks_to_line():
     line.correct()
     down_motor.run_time(speed=-1000, time=400, wait=False)
     line.follow_cm(32)
-

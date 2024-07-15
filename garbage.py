@@ -33,8 +33,8 @@ def openpipfun():
     down_motor.run_time(speed=-500, time=450, wait=True)
     up_motor.run_angle(speed=1000, rotation_angle=200, wait=False)
     base.stop()
-    left_motor.run_angle(rotation_angle=40, speed=1000)
-    base.move_mm(20, 400)
+    left_motor.run_angle(rotation_angle=50, speed=1000)
+
 
 
 def open_pipe1():
