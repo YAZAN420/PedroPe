@@ -44,13 +44,13 @@ def open_pipe1():
     base.turn(9.5)
     up_motor.run_angle(speed=8000, rotation_angle=80, wait=False)
     down_motor.run_angle(speed=1000, rotation_angle=260, wait=False)
-    base.sync_acc(510)
+    base.sync_acc(505)
     downClaw()
     down_motor.stop()
     openpipfun()
     base.move_mm(50, -400)
     up_motor.stop()
-    downClaw()
+
 
 
 def open_pipe2():

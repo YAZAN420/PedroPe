@@ -8,6 +8,13 @@ def see_black():
     sec = right_sensor.reflection()
     return fir+sec < 20
 
+def see_black_front():
+    sec = front_sensor.reflection()
+    return sec < 20
+
+def see_red():
+    ref2 = front_sensor.color()
+    return  ref2==Color.RED
 
 def see_white():
     ref1 = left_sensor.reflection()
@@ -108,15 +115,19 @@ def take4block(dis=130):
 def make2buildRedAndYellow(mode):
     base.move_until_method(see_yellow_small, -400)
     wait(200)
-    base.sync_acc(220 if mode == 1 else 15)
+    base.sync_acc(190 if mode == 1 else 15)
     base.turn(70)
     base.move_mm(20, 300)
     base.turn_until_method(lambda: front_sensor.reflection() < 10, speed=100)
     line.correct(duration=0.35)
     line.until_method(see_yellow_big, speed=50)
-    base.move_mm(140, 300)
+    base.move_mm(150, 300)
     wait(200)
-    base.turn(95 * (-1 if mode == 1 else 1))
+    # base.turn(95 * (-1 if mode == 1 else 1))
+    base.turn(20 * (-1 if mode == 1 else 1))
+    base.turn_until_method(see_black_front,200*(-1 if mode == 1 else 1))
+    base.turn_until_method(see_red,200*(-1 if mode == 1 else 1))
+    base.turn(7 * (-1 if mode == 1 else 1))
     base.move_mm(10, 400)
     leaveblocks()
 
@@ -143,7 +154,7 @@ def leaveblocks():
     down_motor.run_angle(speed=600, rotation_angle=8)
     up_motor.stop()
     up_motor.run_time(speed=-400, time=800)
-    base.sync_acc(-90)
+    base.sync_acc(-75)
     upClaw()
     base.sync_acc(-110)
     wait(200)
@@ -156,38 +167,38 @@ def leaveblocks():
     base.sync_acc(115)
     up_motor.run_time(-250, 340)
     down_motor.run_angle(speed=-1000, rotation_angle=100)
-    base.sync_acc(-200)
+    base.sync_acc(-150)
 
 
 
 def from_blocks_to_hotam_four(mode):
-    downClaw()
-    base.turn(50)
-    base.move_mm(30, 500)
-    base.move_until_method(see_black, 400)
-    base.move_mm(50, 800)
-    base.turn(120)
-    base.turn_until_method(lambda: right_sensor.reflection() < 7, 100)
-    wait(200)
-    run()
-    base.turn(140)
-    base.sync_acc(200)
-    base.move_until_method(see_yellow_small2, 400)
-    wait(100)
-    resetDetectedColor(170)
+    # downClaw()
+    # base.turn(50)
+    # base.move_mm(30, 500)
+    # base.move_until_method(see_black, 400)
+    # base.move_mm(50, 800)
+    # base.turn(120)
+    # base.turn_until_method(lambda: right_sensor.reflection() < 7, 100)
+    # wait(200)
+    # run()
+    # base.turn(140)
+    # base.sync_acc(200)
+    # base.move_until_method(see_yellow_small2, 400)
+    # wait(100)
+    # resetDetectedColor(170)
     if (mode == 1):
-        base.sync_acc(250)
+        # base.sync_acc(250)
         base.turn(-100)
         up_motor.run_angle(rotation_angle=50, speed=550)
-        base.turn(100)
+        base.turn(110)
         downClaw()
-        base.sync_acc(280)
+        base.sync_acc(260)
     else:
-        base.sync_acc(530)
+        base.sync_acc(250)
     downMotorResetTrueOrFalse(1000)
     upClaw()
-    base.sync_acc(-15)
-    base.turn(-100)
+    base.sync_acc(-5)
+    base.turn(-85)
     base.move_mm(200, -1000)
     up_motor.stop()
     up_motor.run_angle(rotation_angle=100, speed=-550, wait=True)
