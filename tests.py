@@ -94,7 +94,7 @@ def test_for_steering():
         downClaw()
         wait(5000)
         wait(200)
-        base.move_until_method(see_yellow_small, speed=300)
+        base.move_until_method(see_yellow_small_left, speed=300)
         take4block()
 
 
@@ -144,25 +144,6 @@ def testU():
     line.correct()
     down_motor.run(500)
 
-
-def printValues(sensor):
-    while True:
-        wait(200)
-        r, g, b = sensor.rgb()
-        h, s, v = sensor.hsv()
-        wait(200)
-        ref = sensor.reflection()
-        wait(200)
-        # amp = sensor.ambient()
-        print(r)
-        print(g)
-        print(b)
-        print(h)
-        print(s)
-        print(v)
-        print(ref)
-        # print(amp)
-        print("______________________________")
 
 
 def testBlocks():
