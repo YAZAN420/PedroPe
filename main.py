@@ -16,9 +16,9 @@ mode = 2
 waitForButtonPress()
 preflightChecks()
 resetStart()
-# take8Blocks()
-# make2buildRedAndYellow(mode)
-# print(stopwatch.time()//1000)
+take8Blocks()
+make2buildRedAndYellow(mode)
+print(stopwatch.time()//1000)
 from_blocks_to_hotam_four(mode)
 
 finish()
