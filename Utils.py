@@ -18,25 +18,6 @@ def preflightChecks():
     ev3.speaker.beep(frequency=600, duration=300)
 
 
-def printValues(sensor):
-    while True:
-        wait(200)
-        r, g, b = sensor.rgb()
-        h, s, v = sensor.hsv()
-        wait(200)
-        ref = sensor.reflection()
-        wait(200)
-        # amp = sensor.ambient()
-        print(r)
-        print(g)
-        print(b)
-        print(h)
-        print(s)
-        print(v)
-        print(ref)
-        # print(amp)
-        print("______________________________")
-
 def waitForButtonPress():
     print("Waiting for the button:")
     while not ev3.buttons.pressed():
