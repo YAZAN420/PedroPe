@@ -9,6 +9,7 @@ from Utils import *
 from config import *
 from tests import *
 from mainFunctions import *
+from garbage import *
 from AccOneEnc import *
 import time
 mode = 2
@@ -19,4 +20,5 @@ take8Blocks()
 make2buildRedAndYellow(mode)
 print(stopwatch.time()//1000)
 from_blocks_to_hotam_four(mode)
+
 finish()

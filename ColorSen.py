@@ -25,7 +25,6 @@ def rgb_to_hsv(rgb):
     v = v * 100  
     return (h, s, v)
 
-
 class ColorSen(ColorSensor):    
     def reflection(self):
         ref = super().reflection()
