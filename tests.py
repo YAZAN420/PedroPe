@@ -56,7 +56,7 @@ def put2BlockOn2Block():
 
 def lineAndTurn():
     up_motor.run_until_stalled(-80, then=Stop.HOLD)
-    waitForButtonPress()
+    wait_for_button_press()
     line.correct()
     line.followUntilSensor(-70, "right")
     line.follow_cm(-70, 7.5)
@@ -75,13 +75,13 @@ def testClaws2():
 
 def correctTest():
     while True:
-        waitForButtonPress()
+        wait_for_button_press()
         line.correct()
 
 
 def test_for_steering():
     while True:
-        waitForButtonPress()
+        wait_for_button_press()
         downClaw()
         base.move_until_method(see_black, 1000)
         base.sync_acc(100)
@@ -111,13 +111,13 @@ def testleaveblocksagain():
 
 def lineTest():
     while True:
-        waitForButtonPress()
+        wait_for_button_press()
         line.correct()
         line.follow_cm(40)
 
 
 def testU():
-    waitForButtonPress()
+    wait_for_button_press()
     line.correct()
     line.followUntilSensorright(-70)
     base.move_mm(100, 250)
@@ -182,7 +182,7 @@ def testBlocks():
 
 def tmpTest():
     while True:
-        waitForButtonPress()
+        wait_for_button_press()
         reset()
         wait(2000)
         up_motor.stop()
@@ -326,7 +326,7 @@ def testgar():
 def follow_test():
     downClaw()
     while True:
-        waitForButtonPress()
+        wait_for_button_press()
         line.follow_cm(30)
 
 

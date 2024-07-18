@@ -3,7 +3,7 @@ from config import *
 from pybricks.tools import wait, StopWatch  # type: ignore
 
 
-def preflightChecks():
+def preflight_checks():
     if (DEBUG):
         stopwatch.reset()
     voltage = ev3.battery.voltage()
@@ -18,7 +18,7 @@ def preflightChecks():
     ev3.speaker.beep(frequency=600, duration=300)
 
 
-def waitForButtonPress():
+def wait_for_button_press():
     print("Waiting for the button:")
     while not ev3.buttons.pressed():
         wait(10)
@@ -30,11 +30,11 @@ def waitForButtonPress():
 
 def printCalibrateColor():
     print("Black:")
-    waitForButtonPress()
+    wait_for_button_press()
     black = (left_sensor.rawRef() + right_sensor.rawRef())/2
     print(black)
     print("White:")
-    waitForButtonPress()
+    wait_for_button_press()
     white = (left_sensor.rawRef() + right_sensor.rawRef())/2
     print(white)
     print("Finished calibrate")
