@@ -22,8 +22,8 @@ def putBlockOnBlock():
 
 def make2BlocksGood(lastWait):
     down_motor.run_time(1000, 300*1.5, wait=False)
-    wait(80)
-    base.sync_acc(-35, 1000)
+    wait(90)
+    base.sync_acc(-60)
     down_motor.run_time(-1000, 220*3, wait=lastWait)
 
 
@@ -34,7 +34,7 @@ def putBlockOnBlockWithGood(lastWait=True):
     make2BlocksGood(lastWait)
 
 
-def take_8_blocks():
+def be_ready_first_4_blocks():
     left_motor.run_angle(speed=-700, rotation_angle=230)
     wait(100)
     right_motor.run_angle(speed=-700, rotation_angle=260)
@@ -42,13 +42,19 @@ def take_8_blocks():
     resetDetectedColor()
     wait(100)
     moveUntilBlock(500)
-    take4block()
+
+
+def reset_on_white_turn_reset_on_wall():
     base.move_mm(300, -400)
     base.move_until_method(see_white, -250)
     wait(100)
     base.sync_acc(90, 250)
     base.turn(-110)
-    base.move_mm(170, -1000)
+    base.move_mm(80, -1000)
+
+
+def move_from_side1_to_side2():
+    reset_on_white_turn_reset_on_wall()
     down_motor.run_time(speed=10000, time=400, wait=False)
     up_motor.run_time(speed=1000, time=500, wait=False)
     wait(400)  # do not change to be fast
@@ -56,28 +62,34 @@ def take_8_blocks():
     base.move_mm(70, 200)
     wait(200)
     downMotorResetTrueOrFalse(1000, False)
-    base.turn(78, 300)
-    wait(200)
+    base.turn(85, 300)
+    wait(100)
     resetDetectedColor(angle=180)
-    base.stop()
-    # right_motor.run_angle(speed=700, rotation_angle=70)
-    # wait(50)
-    # left_motor.run_angle(speed=700, rotation_angle=70)
-    # wait(50)
-    # base.move_mm(30, -400)
     downClaw()
-    take4block(90)
+    base.stop()
+    wait(3000)
+    right_motor.run_angle(speed=600, rotation_angle=15, wait=False)
+    wait(3000)
+    base.move_until_method(see_yellow_small_left, speed=150)
+    wait(10000)
 
 
-def take4block(dis=130):
-    base.move_mm(dis, 400)
+def take_8_blocks():
+    be_ready_first_4_blocks()
+    take_4_block(side=1)
+    move_from_side1_to_side2()
+    take_4_block(side=2)
+
+
+def take_4_block(side):
+    base.move_mm(130 if side is 1 else 20, 300)
     putBlockOnBlockWithGood()
     down_motor.run_time(1000, 220*1.5, then=Stop.HOLD, wait=True)
     up_motor.run_angle(speed=1000, rotation_angle=90, wait=False)
     wait(135)
     base.sync_acc(100)
     downClaw()
-    base.move_mm(65, 400)
+    base.move_mm(75, 400)
     putBlockOnBlockWithGood(False)
     wait(210)
 
