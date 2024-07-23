@@ -1,9 +1,9 @@
-from garbage import run
+
 from config import *
 from Utils import *
-from garbage import *
 from seeWithSensors import *
 from HotamAndPipe import *
+
 
 def resetDetectedColor(angle=191):
     down_motor.run_angle(speed=-10000, rotation_angle=angle,
@@ -15,7 +15,7 @@ def reset_start():
     up_motor.run_time(speed=-1000, time=600, wait=False)
 
 
-def downClaw(duty=70):
+def downClaw(duty=130):
     up_motor.run_until_stalled(-6000, then=Stop.HOLD, duty_limit=duty)
 
 

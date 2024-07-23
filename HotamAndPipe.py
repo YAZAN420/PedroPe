@@ -6,7 +6,7 @@ from resetAndMotor import *
 
 
 def openpipfun():
-    down_motor.run_until_stalled(speed=-1000, duty_limit=25)
+    down_motor.run_until_stalled(speed=-1000, duty_limit=21)
     up_motor.run_angle(speed=1000, rotation_angle=200, wait=False)
     base.stop()
     left_motor.run_angle(rotation_angle=40, speed=1000)
@@ -58,24 +58,18 @@ def takeFirstSmallDebris():
     up_motor.run_time(speed=-500, time=1000, wait=False)
     wait(470)
     downMotorResetTrueOrFalse(1000, False)
-    wait(400)
-    # base.sync_acc(-200)
-    # down_motor.run_angle(rotation_angle=-220, speed=1000, wait=False)
-    # base.sync_acc(30)
-    # downMotorResetTrueOrFalse(1000, False)
+    wait(500)
     base.sync_acc(-390)
     up_motor.run_angle(rotation_angle=60, speed=1000, wait=False)
     base.turn(72)
     down_motor.run_angle(rotation_angle=120, speed=-1000, wait=False)
-    # base.sync_acc(260)
-    base.move_mm(280, 1000)
+    base.move_mm(280, 500)
     upMotorResetWithTrueOrFalse(-1000, False)
     wait(100)
 
 
 def takeSecondSmallDebris():
     down_motor.run_time(speed=-400, time=600, wait=False)
-    # down_motor.run_time(speed=-1000, time=300)
     wait(150)
     base.sync_acc(200)
     upMotorResetWithTrueOrFalse(-1000, False)
