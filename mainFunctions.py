@@ -1,4 +1,4 @@
-from HotamAndPipe import open_pipe_second,open_pipe,takeFirstSmallDebris,takeSecondSmallDebris
+from HotamAndPipe import open_pipe_second, open_pipe, takeFirstSmallDebris, takeSecondSmallDebris
 from config import *
 from Utils import *
 from seeWithSensors import *
@@ -6,7 +6,7 @@ from HotamAndPipe import *
 from resetAndMotor import *
 
 
-def putBlockOnBlock():
+def put_block_on_block():
     down_motor.run_time(400, 300*1.5, then=Stop.HOLD, wait=True)
     down_motor.run(600)
     up_motor.run_angle(speed=300, rotation_angle=60,
@@ -21,7 +21,7 @@ def putBlockOnBlock():
     wait(200)
 
 
-def make2BlocksGood(side,last_wait):
+def make2BlocksGood(side, last_wait):
     down_motor.run_time(1000, 300*1.5, wait=False)
     wait(80)
     if (side == 2):
@@ -31,22 +31,22 @@ def make2BlocksGood(side,last_wait):
     down_motor.run_time(-1000, 220*3, wait=last_wait)
 
 
-def putBlockOnBlockWithGood(side,last_wait):
-    putBlockOnBlock()
+def put_block_on_block_with_good(side, last_wait):
+    put_block_on_block()
     up_motor.run_time(speed=-1000, time=600, wait=False)
     wait(110)
-    make2BlocksGood(side=side,last_wait=last_wait)
+    make2BlocksGood(side=side, last_wait=last_wait)
 
-
-def take_8_blocks():
+def reset_for_first4():
     left_motor.run_angle(speed=-700, rotation_angle=230)
     wait(100)
     right_motor.run_angle(speed=-700, rotation_angle=260)
     wait(100)
     resetDetectedColor()
     wait(100)
-    moveUntilBlock(500)
-    take_4_blocks(side=1)
+    move_until_block(500)
+
+def move_from_side1_to_side2():
     base.move_mm(270, -400)
     base.move_until_method(see_white, -250)
     wait(100)
@@ -65,19 +65,23 @@ def take_8_blocks():
     resetDetectedColor(angle=180)
     base.stop()
     downClaw()
-    take_4_blocks(side=2)
 
+def take_8_blocks():
+    reset_for_first4()
+    take_4_blocks(side=1)
+    move_from_side1_to_side2()
+    take_4_blocks(side=2)
 
 def take_4_blocks(side):
     base.move_mm(130 if side is 1 else 220, 400)
-    putBlockOnBlockWithGood(side=side,last_wait=True)
+    put_block_on_block_with_good(side=side, last_wait=True)
     down_motor.run_time(1000, 220*1.5, then=Stop.HOLD, wait=True)
     up_motor.run_angle(speed=1000, rotation_angle=90, wait=False)
     wait(135)
     base.sync_acc(100)
     downClaw()
     base.move_mm(55, 400)
-    putBlockOnBlockWithGood(side=side,last_wait=False)
+    put_block_on_block_with_good(side=side, last_wait=False)
     wait(210)
 
 

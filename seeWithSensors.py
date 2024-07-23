@@ -50,5 +50,5 @@ def see_yellow_small_right():
     return v > 20
 
 
-def moveUntilBlock(speed):
+def move_until_block(speed):
     base.move_until_method(lambda: front_sensor.rgb()[0] > 4, speed)

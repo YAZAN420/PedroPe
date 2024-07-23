@@ -270,7 +270,7 @@ def testforputblockonblock():
     while (True):
         downClaw()
         wait(4000)
-        putBlockOnBlock()
+        put_block_on_block()
 
 
 def leaveTest():
