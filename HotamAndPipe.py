@@ -15,7 +15,7 @@ def openpipfun():
 def open_pipe():
     line.until_method(see_white, speed=40)
     wait(100)
-    base.turn(9)
+    base.turn(8)
     down_motor.run_angle(speed=-1000, rotation_angle=200, wait=False)
     base.sync_acc(520)
     down_motor.run_time(speed=1000, time=1000, wait=False)
@@ -25,9 +25,42 @@ def open_pipe():
 
 
 def open_pipe_second():
-    base.sync_acc(420)
-    openpipfun()
-    up_motor.run_time(speed=-500, time=1200)
+
+    # upClaw()
+    # base.sync_acc(445)
+    # downClaw()
+    # downMotorResetTrueOrFalse(1000, True)
+    # upClaw()
+    # base.turn(-90)
+    # base.move_mm(200, 1000)
+    # base.turn(110)
+    # base.move_mm(300, -1000)
+    # downClaw()
+    # base.turn(220)
+    downMotorResetTrueOrFalse(1000)
+    base.sync_acc(430)
+    down_motor.run_until_stalled(speed=-1000, duty_limit=40)
+    base.turn(-20)
+    base.turn(20)
+    # up_motor.run_angle(speed=1000, rotation_angle=200, wait=False)
+    upMotorResetWithTrueOrFalse(1000, False)
+    base.stop()
+    left_motor.run_angle(rotation_angle=40, speed=1000)
+    base.turn(-40)
+    downMotorResetTrueOrFalse(1000)
+    resetDetectedColor()
+    base.sync_acc(40)
+    up_motor.stop()
+    downClaw()
+    downClaw()
+    downMotorResetTrueOrFalse(1000)
+    upClaw()
+    base.turn(-60)
+    base.move_mm(200, 1000)
+    base.turn(110)
+    base.move_mm(300, -1000)
+    downClaw()
+    base.turn(220)
 
 
 def close_pipe2():
@@ -68,10 +101,23 @@ def takeFirstSmallDebris():
     wait(100)
 
 
+def supriseRoleDeletHotam():
+    base.sync_acc(-30)
+    up_motor.run_time(speed=-500, time=1000, wait=False)
+    wait(470)
+    downMotorResetTrueOrFalse(1000, False)
+    wait(500)
+    base.sync_acc(-390)
+    # up_motor.run_angle(rotation_angle=60, speed=1000, wait=False)
+    base.turn(72)
+
+
 def takeSecondSmallDebris():
     down_motor.run_time(speed=-400, time=600, wait=False)
     wait(150)
-    base.sync_acc(200)
+    base.sync_acc(500)
+
+    # base.sync_acc(300)
     upMotorResetWithTrueOrFalse(-1000, False)
-    base.sync_acc(300)
+    wait(300)
     base.move_until_method(see_white, 300)

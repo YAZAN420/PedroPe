@@ -1,6 +1,6 @@
 #!/usr/bin/env pybricks-micropython
 from pybricks.ev3devices import ColorSensor # type: ignore
-import pybicks.ev3devices.Motor # type: ignore
+# import pybricks.ev3devices.Motor # type: ignore
 from pybricks.parameters import Port, Direction, Color, Stop  # type: ignore
 from constants import *
 
@@ -38,11 +38,11 @@ class ColorSen(ColorSensor):
     def hsv(self):
         return rgb_to_hsv(self.rgb())
     
-class Motor(pybicks.ev3devices.Motor):
-    def run_angle(self, is_neg, angle, speed=1000, then=Stop.HOLD, wait=True):
-        super().run_angle(speed=speed*(2*is_neg - 1),
-                          rotation_angle=angle, then=then, wait=wait)
+# class Motor(pybricks.ev3devices.Motor):
+#     def run_angle(self, is_neg, angle, speed=1000, then=Stop.HOLD, wait=True):
+#         super().run_angle(speed=speed*(2*is_neg - 1),
+#                           rotation_angle=angle, then=then, wait=wait)
 
-    def run_time(self, is_pos, time, speed=1000, then=Stop.HOLD, wait=True):
-        super().run_time(speed=speed*(2*is_pos - 1),
-                         time=time, then=then, wait=wait)
+#     def run_time(self, is_pos, time, speed=1000, then=Stop.HOLD, wait=True):
+#         super().run_time(speed=speed*(2*is_pos - 1),
+#                          time=time, then=then, wait=wait)
