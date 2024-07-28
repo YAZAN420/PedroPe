@@ -152,6 +152,13 @@ class Base(DriveBase):
             wait(200)
             self.acc_one_motor(self.left_motor, degrees, speed)
 
+    def turn_without_sync(self,angle,speed=1000):
+        angle *= 4
+        self.left_motor.run_angle(speed=speed,rotation_angle=angle,wait=False)
+        self.right_motor.run_angle(speed=speed,rotation_angle=-angle,wait=True)
+    
+
+
     def turn_until_method(self, function, speed=60):
         self.start_tank(speed, -speed)
         while (not function()):

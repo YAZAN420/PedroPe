@@ -5,7 +5,7 @@ from Utils import *
 def see_black():
     fir = left_sensor.reflection()
     sec = right_sensor.reflection()
-    return fir+sec < 30
+    return fir+sec < 40
 
 
 def see_blue_right():

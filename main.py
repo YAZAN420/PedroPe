@@ -11,7 +11,7 @@ from tests import *
 from mainFunctions import *
 from AccOneEnc import *
 import time
-mode = 2
+mode = 1
 wait_for_button_press()
 preflight_checks()
 reset_start()
@@ -19,5 +19,4 @@ take_8_blocks()
 make2buildRedAndYellow(mode)
 print(stopwatch.time()//1000)
 from_blocks_to_hotam_four(mode)
-
 finish()

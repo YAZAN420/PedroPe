@@ -19,7 +19,6 @@ right_sensor = ColorSen(Port.S3)
 front_sensor = ColorSen(Port.S1)
 base = Base(left_motor=left_motor, right_motor=right_motor,
             wheel_diameter=81.6, axle_track=170)
-# straight_acceleration=700
 base.settings(turn_rate=2250, straight_speed=1000,
               straight_acceleration=250, turn_acceleration=600)
 line = LineController(base, left_sensor=left_sensor, right_sensor=right_sensor)

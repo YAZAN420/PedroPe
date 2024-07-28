@@ -27,7 +27,7 @@ def make2BlocksGood(side, last_wait):
     if (side == 2):
         base.sync_acc(-50, 600)
     else:
-        base.sync_acc(-35, 6000)
+        base.sync_acc(-30, 600)
     down_motor.run_time(-1000, 220*3, wait=last_wait)
 
 
@@ -39,33 +39,40 @@ def put_block_on_block_with_good(side, last_wait):
 
 
 def reset_for_first4():
-    left_motor.run_angle(speed=-700, rotation_angle=230)
-    wait(100)
-    right_motor.run_angle(speed=-700, rotation_angle=260)
-    wait(100)
+    left_motor.run_angle(speed=-700, rotation_angle=220)
+    wait(50)
+    right_motor.run_angle(speed=-700, rotation_angle=275)
+    wait(50)
     resetDetectedColor()
-    wait(100)
+    # wait(100)
     move_until_block(500)
+
+
+def resetOnWaillTime(t=600):
+    base.stop()
+    left_motor.run_time(speed=-1000, time=t, wait=False)
+    right_motor.run_time(speed=-1000, time=t, wait=True)
 
 
 def move_from_side1_to_side2():
     base.move_mm(270, -400)
-    base.move_until_method(see_white, -250)
+    base.move_until_method(see_white, -300)
     wait(100)
-    base.sync_acc(90, 250)
+    base.sync_acc(90, 350)
     base.turn(-110)
-    base.move_mm(170, -1000)
+    # base.move_mm(130, -400)
+    resetOnWaillTime(800)
     down_motor.run_time(speed=10000, time=400, wait=False)
-    up_motor.run_time(speed=1000, time=500, wait=False)
-    wait(400)  # do not change to be fast
+    # up_motor.run_time(speed=1000, time=500, wait=True)
+    up_motor.run_angle(speed=500, rotation_angle=90)
+    # wait(400)  # do not change to be fast
     base.sync_acc(900, 450)
-    base.move_mm(70, 200)
+    base.move_mm(70, 250)
     wait(200)
     downMotorResetTrueOrFalse(1000, False)
     base.turn(78, 300)
-    wait(200)
+    wait(100)
     resetDetectedColor(angle=180)
-    base.stop()
     downClaw()
 
 
@@ -77,14 +84,16 @@ def take_8_blocks():
 
 
 def take_4_blocks(side):
-    base.move_mm(130 if side is 1 else 220, 400)
+    base.move_mm(120 if side is 1 else 190, 500)
+    wait(50)
     put_block_on_block_with_good(side=side, last_wait=True)
     down_motor.run_time(1000, 220*1.5, then=Stop.HOLD, wait=True)
     up_motor.run_angle(speed=1000, rotation_angle=90, wait=False)
     wait(135)
     base.sync_acc(100)
-    downClaw()
-    base.move_mm(55, 400)
+    downClaw(140)
+    base.move_mm(40, 400)
+    wait(50)
     put_block_on_block_with_good(side=side, last_wait=False)
     wait(210)
 
@@ -92,18 +101,20 @@ def take_4_blocks(side):
 def make2buildRedAndYellow(mode):
     base.move_until_method(see_yellow_small_left, -400)
     wait(200)
-    base.sync_acc(190 if mode == 1 else -25)
-    base.turn(70)
-    base.move_mm(20, 300)
-    base.turn_until_method(lambda: front_sensor.reflection() < 10, speed=200)
+    base.sync_acc(190 if mode == 1 else -35)
+    base.turn(80)
+    base.move_mm(35, 300)
+    base.turn_until_method(lambda: front_sensor.reflection() < 10, speed=150)
+    wait(50)
     line.correct(duration=0.35)
     line.until_method(see_yellow_big, speed=50)
-    base.move_mm(150, 300)
+    base.move_mm(110, 500)
+    wait(50)
     wait(200)
     base.turn(40 * (-1 if mode == 1 else 1))
     base.turn_until_method(see_black_front, 300*(-1 if mode == 1 else 1))
     base.turn_until_method(see_red, 300*(-1 if mode == 1 else 1))
-    base.turn(10 * (-1 if mode == 1 else 1))
+    base.turn(5 * (-1 if mode == 1 else 1))
     base.move_mm(10, 400)
     leaveblocks()
 
@@ -112,7 +123,7 @@ def leaveblocks():
     base.stop()
     down_motor.run_time(speed=1000, time=440, wait=True)
     down_motor.run_angle(speed=-1000, rotation_angle=40, wait=True)
-    base.sync_acc(-130)
+    base.sync_acc(-115)
     base.sync_acc(15)
     up_motor.run_angle(speed=300, rotation_angle=90, wait=False)
     wait(150)
@@ -121,18 +132,19 @@ def leaveblocks():
     wait(250)
     down_motor.run_time(speed=1000, time=450, wait=False)
     wait(100)
-    base.sync_acc(-45)
+    base.sync_acc(-40)
     up_motor.run_angle(speed=300, rotation_angle=95)
-    base.sync_acc(365, 200)
+    base.sync_acc(345, 500)
     base.stop()
     # uninstall
-    up_motor.run_time(speed=-300, time=240)
+    up_motor.run_time(speed=-300, time=230)
     down_motor.run_angle(speed=-1000, rotation_angle=90)
     upClaw()
-    base.sync_acc(-80)
+    # up_motor.run_time(speed=1000, time=300)
+    base.sync_acc(-85)
     down_motor.run_angle(speed=600, rotation_angle=8)
     up_motor.stop()
-    up_motor.run_time(speed=-400, time=800)
+    up_motor.run_time(speed=-300, time=800)
     base.sync_acc(-75)
     upClaw()
     base.sync_acc(-110)
@@ -141,11 +153,13 @@ def leaveblocks():
     down_motor.run_angle(speed=-1000, rotation_angle=20, wait=False)
     downClaw()
     down_motor.run_time(speed=1000, time=450)
-    base.sync_acc(-40)
+    base.sync_acc(-35, 500)
     up_motor.run_angle(speed=300, rotation_angle=90)
-    base.sync_acc(105)
-    up_motor.run_time(-250, 325)
+    base.sync_acc(95, 500)
+    up_motor.run_time(-250, 315)
     down_motor.run_angle(speed=-1000, rotation_angle=110)
+    up_motor.run_angle(speed=1000, rotation_angle=15, wait=False)
+    wait(70)
     base.sync_acc(-150)
 
 
@@ -156,8 +170,8 @@ def goToLineAfterMake2Build():
     base.move_mm(30, 600)
     base.move_until_method(see_black, 600)
     base.move_mm(40, 600)
-    base.turn(100, 900)
-    base.turn_until_method(lambda: right_sensor.reflection() < 7, 200)
+    base.turn(90, 900)
+    base.turn_until_method(lambda: right_sensor.reflection() < 7, 250)
     wait(100)
 
 
@@ -167,9 +181,9 @@ def removeBlocksFromTheFaceOfRobot(mode):
         up_motor.run_angle(rotation_angle=50, speed=550)
         base.turn(105, 700)
         downClaw()
-        base.sync_acc(310)
+        base.sync_acc(285)
     else:
-        base.sync_acc(310)
+        base.sync_acc(315)
 
 
 def from_blocks_to_hotam_four(mode):
@@ -187,11 +201,11 @@ def from_blocks_to_hotam_four(mode):
     up_motor.run_angle(rotation_angle=75, speed=1000, wait=False)
     base.turn(-110)
     up_motor.stop()
-    base.move_mm(200, -1000)
+    resetOnWaillTime(800)
     takeSecondSmallDebris()
     downMotorResetTrueOrFalse(1000, False)
-    base.sync_acc(120)
-    base.turn(90)
+    base.sync_acc(130)
+    base.turn(95)
     open_pipe_second()
     base.turn(-90)
     upClaw()
