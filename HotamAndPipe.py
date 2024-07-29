@@ -25,11 +25,12 @@ def open_pipe():
 
 
 def open_pipe_second():
-    base.sync_acc(435)
+    base.sync_acc(410)
     openpipfun()
     downMotorResetTrueOrFalse(1000)
-    down_motor.run_angle(speed=-1000, rotation_angle=120)
-    up_motor.run_time(speed=-500, time=8000, wait=False)
+    down_motor.run_angle(speed=-1000, rotation_angle=120,wait=False)
+    base.sync_acc(-15)
+    up_motor.run_time(speed=-500, time=1500, wait=False)
     wait(1000)
 
 

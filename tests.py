@@ -15,7 +15,11 @@ def testUpMotor():
         ev3.speaker.beep()
         wait(3000)
 
-
+def test_calabrtion():
+    downClaw()
+    while True:
+        print((left_sensor.reflection() + right_sensor.reflection())/2)
+        
 def testForTurn1Motor():
     down_motor.run_time(speed=-1000, time=1000)
 
@@ -94,8 +98,8 @@ def test_for_steering():
         downClaw()
         wait(5000)
         wait(200)
-        base.move_until_method(see_yellow_small, speed=300)
-        take4block()
+        # base.move_until_method(see_yellow_small, speed=300)
+        # take4block()
 
 
 def testleaveblocksagain():
