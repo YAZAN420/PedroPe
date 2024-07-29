@@ -173,6 +173,8 @@ def goToLineAfterMake2Build():
     base.turn(90, 900)
     base.turn_until_method(lambda: right_sensor.reflection() < 10, 200)
     wait(100)
+    line.until_method(see_white, speed=40)
+    wait(100)
 
 
 def removeBlocksFromTheFaceOfRobot(mode):
@@ -186,10 +188,33 @@ def removeBlocksFromTheFaceOfRobot(mode):
         base.sync_acc(315)
 
 
-def from_blocks_to_hotam_four(mode):
+def from_blocks_to_hotam_four(mode, pipe):
     goToLineAfterMake2Build()
-    open_pipe()
-    takeFirstSmallDebris()
+    if pipe == 0:
+        open_pipe()
+        takeFirstSmallDebris()
+    else:
+        base.turn(9)
+        down_motor.run_angle(speed=-1000, rotation_angle=200, wait=False)
+        base.sync_acc(520)
+        down_motor.run_time(speed=1000, time=1000, wait=False)
+        wait(200)
+        base.turn(25)
+        base.sync_acc(170)
+        up_motor.run_time(time=1000,speed=1000)
+        #
+        base.sync_acc(-40)
+        up_motor.run_time(speed=-500, time=1000, wait=False)
+        wait(470)
+        downMotorResetTrueOrFalse(1000, False)
+        wait(500)
+        base.sync_acc(-390)
+        up_motor.run_angle(rotation_angle=60, speed=1000, wait=False)
+        base.turn(55)
+        down_motor.run_angle(rotation_angle=120, speed=-1000, wait=False)
+        base.move_mm(290, 500)
+        upMotorResetWithTrueOrFalse(-1000, False)
+        wait(100)
     base.move_mm(750, -500)
     down_motor.run_angle(rotation_angle=-70, speed=550, wait=False)
     base.turn(150)
@@ -202,15 +227,33 @@ def from_blocks_to_hotam_four(mode):
     base.turn(-110)
     up_motor.stop()
     resetOnWaillTime(800)
-    takeSecondSmallDebris()
-    downMotorResetTrueOrFalse(1000, False)
-    base.sync_acc(160)
-    base.turn(95)
-    open_pipe_second()
-    base.turn(-80)
-    wait(500)
-    upClaw()
-    base.sync_acc(150)
+    if pipe == 1:
+        down_motor.run_time(speed=-400, time=600, wait=False)
+        wait(150)
+        base.sync_acc(200)
+        upMotorResetWithTrueOrFalse(-1000, False)
+        base.sync_acc(300)
+        base.move_until_method(see_white, 300)
+        downMotorResetTrueOrFalse(1000)
+        # base.sync_acc(-200)
+        base.sync_acc(-90)
+        base.turn(90)
+        base.sync_acc(420)
+        # upClaw()
+        up_motor.run_time(time=1000,speed=1000)
+        base.turn(-80)
+        base.sync_acc(200)
+
+    else:
+        takeSecondSmallDebris()
+        downMotorResetTrueOrFalse(1000, False)
+        base.sync_acc(160)
+        base.turn(95)
+        open_pipe_second()
+        base.turn(-80)
+        wait(500)
+        upClaw()
+        base.sync_acc(250)
 
 
 def move_steering(angle, steering, speed=1000):

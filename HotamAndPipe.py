@@ -13,8 +13,6 @@ def openpipfun():
 
 
 def open_pipe():
-    line.until_method(see_white, speed=40)
-    wait(100)
     base.turn(9)
     down_motor.run_angle(speed=-1000, rotation_angle=200, wait=False)
     base.sync_acc(520)
