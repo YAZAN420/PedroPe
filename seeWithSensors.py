@@ -22,6 +22,11 @@ def see_red():
     ref2 = front_sensor.color()
     return ref2 == Color.RED
 
+def see_red_Right():
+    ref2 = right_sensor.color()
+    return ref2 == Color.RED
+
+
 
 def see_white():
     ref1 = left_sensor.reflection()

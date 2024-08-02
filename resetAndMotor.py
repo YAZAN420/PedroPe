@@ -5,14 +5,14 @@ from seeWithSensors import *
 from HotamAndPipe import *
 
 
-def resetDetectedColor(angle=191):
+def resetDetectedColor(angle=196):
     down_motor.run_angle(speed=-10000, rotation_angle=angle,
                          then=Stop.HOLD, wait=False)
 
 
 def reset_start():
     down_motor.run_time(speed=1000, time=600, wait=False)
-    up_motor.run_time(speed=-1000, time=600, wait=False)
+    up_motor.run_time(speed=-1000, time=800, wait=False)
 
 
 def downClaw(duty=130):

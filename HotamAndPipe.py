@@ -15,23 +15,33 @@ def openpipfun():
 def open_pipe():
     line.until_method(see_white, speed=40)
     wait(100)
-    base.turn(9)
+    base.turn(8)
     down_motor.run_angle(speed=-1000, rotation_angle=200, wait=False)
     base.sync_acc(520)
     down_motor.run_time(speed=1000, time=1000, wait=False)
     wait(200)
-    base.sync_acc(80)
+    base.sync_acc(77)
     openpipfun()
 
 
 def open_pipe_second():
-    base.sync_acc(410)
+    base.sync_acc(415)
     openpipfun()
     downMotorResetTrueOrFalse(1000)
-    down_motor.run_angle(speed=-1000, rotation_angle=170, wait=True)
-    base.sync_acc(-25)
+    # down_motor.run_angle(speed=-1000, rotation_angle=170, wait=True)
+    # base.sync_acc(-25)
     up_motor.run_time(speed=-500, time=2000, wait=False)
     wait(1000)
+    # base.sync_acc(-20)
+    # base.sync_acc(30)
+    downClaw()
+
+    # second
+    # up_motor.run_time(speed=-500, time=1000, wait=True)
+    # base.sync_acc(40)
+    # downClaw()
+    # base.sync_acc(-20)
+    # downClaw()
 
 
 def close_pipe2():
@@ -60,7 +70,7 @@ def close_pipe1():
 def takeFirstSmallDebris():
     base.sync_acc(-30)
     up_motor.run_time(speed=-500, time=1000, wait=False)
-    wait(470)
+    wait(560)
     downMotorResetTrueOrFalse(1000, False)
     wait(500)
     base.sync_acc(-390)

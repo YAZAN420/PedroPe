@@ -44,11 +44,15 @@ def reset_for_first4():
     right_motor.run_angle(speed=-700, rotation_angle=275)
     wait(50)
     resetDetectedColor()
-    # wait(100)
-    move_until_block(500)
+    wait(160)
+    # move_until_block(450)
+    base.move_mm(215, 400)
+    wait(100)
+    base.move_until_method(see_red_Right, 300)
+    wait(100)
 
 
-def resetOnWaillTime(t=600):
+def resetOnWaillTime(t=800):
     base.stop()
     left_motor.run_time(speed=-1000, time=t, wait=False)
     right_motor.run_time(speed=-1000, time=t, wait=True)
@@ -72,7 +76,7 @@ def move_from_side1_to_side2():
     downMotorResetTrueOrFalse(1000, False)
     base.turn(80, 300)
     wait(100)
-    resetDetectedColor(angle=180)
+    resetDetectedColor(angle=205)
     downClaw()
     base.move_mm(50, 400)
 
@@ -85,7 +89,7 @@ def take_8_blocks():
 
 
 def take_4_blocks(side):
-    base.move_mm(120 if side is 1 else 190, 500)
+    base.move_mm(10 if side is 1 else 190, 500)
     wait(50)
     put_block_on_block_with_good(side=side, last_wait=True)
     down_motor.run_time(1000, 220*1.5, then=Stop.HOLD, wait=True)
@@ -93,7 +97,7 @@ def take_4_blocks(side):
     wait(135)
     base.sync_acc(100)
     downClaw(140)
-    base.move_mm(70, 400)
+    base.move_mm(60, 400)
     wait(50)
     put_block_on_block_with_good(side=side, last_wait=False)
     wait(210)
@@ -109,12 +113,12 @@ def make2buildRedAndYellow(mode):
     wait(50)
     line.correct(duration=0.35)
     line.until_method(see_yellow_big, speed=50)
-    base.move_mm(110, 500)
-    wait(50)
-    wait(200)
+    base.move_mm(120, 500)
+    # wait(50)
+    wait(250)
     base.turn(30 * (-1 if mode == 1 else 1))
-    base.turn_until_method(see_black_front, 200*(-1 if mode == 1 else 1))
-    base.turn_until_method(see_red, 200*(-1 if mode == 1 else 1))
+    base.turn_until_method(see_black_front, 250*(-1 if mode == 1 else 1))
+    base.turn_until_method(see_red, 250*(-1 if mode == 1 else 1))
     wait(100)
     base.turn(10 * (-1 if mode == 1 else 1))
     base.move_mm(10, 400)
@@ -127,7 +131,7 @@ def leaveblocks():
     down_motor.run_angle(speed=-1000, rotation_angle=40, wait=True)
     base.sync_acc(-115)
     base.sync_acc(20)
-    up_motor.run_angle(speed=300, rotation_angle=90, wait=False)
+    up_motor.run_angle(speed=300, rotation_angle=95, wait=False)
     wait(190)
     base.sync_acc(-190)
     upMotorResetWithTrueOrFalse(-1000, False)
@@ -136,18 +140,18 @@ def leaveblocks():
     wait(100)
     base.sync_acc(-40)
     up_motor.run_angle(speed=300, rotation_angle=95)
-    base.sync_acc(335, 500)
+    base.sync_acc(345, 500)
     base.stop()
     # uninstall
     up_motor.run_time(speed=-300, time=230)
     down_motor.run_angle(speed=-1000, rotation_angle=90)
     upClaw()
     # up_motor.run_time(speed=1000, time=300)
-    base.sync_acc(-85)
+    base.sync_acc(-79)
     down_motor.run_angle(speed=600, rotation_angle=8)
     up_motor.stop()
-    up_motor.run_time(speed=-300, time=800)
-    base.sync_acc(-75)
+    up_motor.run_time(speed=-400, time=900)
+    base.sync_acc(-80)
     upClaw()
     base.sync_acc(-100)
     wait(200)
@@ -179,13 +183,13 @@ def goToLineAfterMake2Build():
 
 def removeBlocksFromTheFaceOfRobot(mode):
     if (mode == 1):
-        base.turn(-100, 700)
+        base.turn(-90, 700)
         up_motor.run_angle(rotation_angle=50, speed=550)
         base.turn(105, 700)
         downClaw()
         base.sync_acc(285)
     else:
-        base.sync_acc(315)
+        base.sync_acc(320)
 
 
 def from_blocks_to_hotam_four(mode):
@@ -206,7 +210,7 @@ def from_blocks_to_hotam_four(mode):
     resetOnWaillTime(800)
     takeSecondSmallDebris()
     downMotorResetTrueOrFalse(1000, False)
-    base.sync_acc(158)
+    base.sync_acc(155)
     base.turn(96)
     open_pipe_second()
     base.turn(-80)
